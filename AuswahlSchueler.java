@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
 
-import com.itextpdf.text.DocumentException;
+//import com.itextpdf.text.DocumentException;
 
 public class AuswahlSchueler extends JFrame {
 
@@ -131,7 +131,7 @@ datenblattAusdruck.addActionListener(new ActionListener() {
 		try
 		{
 			//Runtime.getRuntime().exec("okular /skole/tjener/home0/rolteich/sdv/listen/knachname,krufname-8.pdf");
-			Runtime.getRuntime().exec( "okular " + Main.OutDir +"/schülerdatenblätter/"+ list.getSelectedValue().toString() + ".pdf");
+			Runtime.getRuntime().exec( "evince " + Main.OutDir +"/schülerdatenblätter/"+ list.getSelectedValue().toString() + ".pdf");
 		 // Desktop.getDesktop().open( new File(Main.OutDir + list.getSelectedValue().toString() + ".pdf")) ;
 		}
 		catch ( Exception /* IOException, URISyntaxException */ exc )

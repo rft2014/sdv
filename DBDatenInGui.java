@@ -103,6 +103,9 @@ private static boolean zahl2bool(String x){
 				Main.kstaat.setText(rs.getString("kstaat"));	
 				Main.kkrankenkasse.setText(rs.getString("kkrankenkasse"));	
 				Main.khausarzt.setText(rs.getString("khausarzt"));
+				Main.tag_ersteinschulung.setSelectedItem(rs.getString("tag_ersteinschulung"));
+				Main.monat_ersteinschulung.setSelectedItem(rs.getString("monat_ersteinschulung"));
+				Main.jahr_ersteinschulung.setSelectedItem(rs.getString("jahr_ersteinschulung"));
 				Main.mname.setText(rs.getString("mname"));
 				Main.mvorname.setText(rs.getString("mvorname"));
 				Main.mstrasse.setText(rs.getString("mstrasse"));

@@ -39,13 +39,13 @@ public class Klassenlisten extends JFrame {
 	JLabel lblNewLabel = new JLabel("Klasse");
 	contentPane.add(lblNewLabel, "cell 5 1");
 	
-	JComboBox comboBoxKlasse = new JComboBox();
+	final JComboBox comboBoxKlasse = new JComboBox(Main.VBGKLASSE);
 	contentPane.add(comboBoxKlasse, "cell 7 1,growx");
 	
 	JLabel lblNewLabel_1 = new JLabel("Listentyp");
 	contentPane.add(lblNewLabel_1, "cell 5 2");
 	
-	JComboBox comboBoxListenTyp = new JComboBox();
+	final JComboBox comboBoxListenTyp = new JComboBox(Main.KLASSENLISTENTYP);
 	contentPane.add(comboBoxListenTyp, "cell 7 2,growx");
 	
 	JButton btnKlassenlisteErstellen = new JButton("Liste erstellen");
@@ -54,7 +54,15 @@ public class Klassenlisten extends JFrame {
 	btnKlassenlisteErstellen.addActionListener(new ActionListener() {
 
 		public void actionPerformed(ActionEvent e) {
-			//Code zum Erstellen des pdf
+			if (comboBoxListenTyp.getSelectedItem().toString() == "kurz")
+			{
+				MakePdf mp = new MakePdf();
+				mp.createKlassenlisteKurz(comboBoxKlasse.getSelectedItem().toString(),Main.OutDir
+						+ "/listen/"
+						+ "Klassenliste_"
+						+ comboBoxKlasse.getSelectedItem().toString() + "_"
+						+ ".pdf");
+			}
 		}
 	});
 	}

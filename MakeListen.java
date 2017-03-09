@@ -89,6 +89,13 @@ public class MakeListen extends JFrame {
 		btnNewButton.setAlignmentY(Component.TOP_ALIGNMENT);
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEADING);
 		panel_4.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Liste erstellen - Probeunterricht (xslx)");
+		btnNewButton_1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnNewButton_1.setAlignmentY(Component.TOP_ALIGNMENT);
+		btnNewButton_1.setHorizontalAlignment(SwingConstants.LEADING);
+		panel_4.add(btnNewButton_1);
+		
 
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -132,7 +139,7 @@ public class MakeListen extends JFrame {
 				try
 				{
 					
-					Runtime.getRuntime().exec( "okular "+ Main.OutDir
+					Runtime.getRuntime().exec( "evince "+ Main.OutDir
 							+ "/listen/"
 							+ "Anmeldungen_"
 							+ ausKl.getSelectedItem().toString() + "_"
@@ -147,6 +154,64 @@ public class MakeListen extends JFrame {
 			}
 		});
 
+		btnNewButton_1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if (probe.isSelected())
+			{
+				if (ausKl.getSelectedItem().toString()!="" && inKl.getSelectedItem().toString()!=""){
+					
+					makeXLSX.writeXLSXFile(ausKl.getSelectedItem().toString(),
+							inKl.getSelectedItem().toString(), Main.OutDir
+									+ "/listen/"
+									+ "Aufnahmeprüfung_"
+									+ ausKl.getSelectedItem().toString() + "_"
+									+ inKl.getSelectedItem().toString()
+									+ "_Gym_50237.xlsx");
+				}else
+				{
+					JOptionPane.showMessageDialog(null,"Sie haben keine korrekte Auswahl getroffen.","Upps, eine Fehlermeldung!"
+							,JOptionPane.ERROR_MESSAGE); 
+				}	
+			}
+		/*	else
+			{
+				if (ausKl.getSelectedItem().toString()!="" && inKl.getSelectedItem().toString()!=""){
+					MakePdf mp = new MakePdf();
+					mp.createAnmeldungSA(ausKl.getSelectedItem().toString(),
+							inKl.getSelectedItem().toString(), Main.OutDir
+									+ "/listen/"
+									+ "Anmeldungen_"
+									+ ausKl.getSelectedItem().toString() + "_"
+									+ inKl.getSelectedItem().toString()
+									+ ".pdf");
+				}else
+				{
+					JOptionPane.showMessageDialog(null,"Sie haben keine korrekte Auswahl getroffen.","Upps, eine Fehlermeldung!"
+							,JOptionPane.ERROR_MESSAGE); 
+				}	
+			}*/
+				
+				
+				try
+				{
+					
+					Runtime.getRuntime().exec( "soffice "+ Main.OutDir
+							+ "/listen/"
+							+ "Aufnahmeprüfung_"
+							+ ausKl.getSelectedItem().toString() + "_"
+							+ inKl.getSelectedItem().toString()
+							+ "_Gym_50237.xlsx");
+				 
+				}
+				catch ( Exception /* IOException, URISyntaxException */ exc )
+				{
+				  exc.printStackTrace();
+				}
+			}
+		});
+
+		
+		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Reserve", null, panel_1, null);
 

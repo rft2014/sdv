@@ -100,10 +100,13 @@ public class GuiDatenInDB {
 						+ Main.divDaten[2].getName() + ", "
 						+ Main.divDaten[3].getName() + ", "
 						+ Main.divDaten[4].getName() + ", "
-						+ Main.divDaten[5].getName() +  ",term) VALUES ('"
-						+ Main.persDaten[0].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèê-]", "") + "', '"
-						+ Main.persDaten[1].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèê-]", "") + "', '"
-						+ Main.persDaten[2].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèê-]", "") + "', '"
+						+ Main.divDaten[5].getName() + ", "
+						+ Main.divDaten[6].getName() + ", "
+						+ Main.divDaten[7].getName() + ", "
+						+ Main.divDaten[8].getName() + ",term) VALUES ('"
+						+ Main.persDaten[0].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèêáà -]", "") + "', '"
+						+ Main.persDaten[1].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèêáà -]", "") + "', '"
+						+ Main.persDaten[2].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèêáà -]", "") + "', '"
 						+ Main.persDaten[3].getText() + "', '"
 						+ Main.persDaten[4].getText() + "', '"
 						+ Main.persDaten[5].getText() + "', '"
@@ -156,7 +159,10 @@ public class GuiDatenInDB {
 						+ Main.divDaten[2].getSelectedItem() + "', '"
 						+ Main.divDaten[3].getSelectedItem() + "', '"
 						+ Main.divDaten[4].getSelectedItem() + "', '"
-						+ Main.divDaten[5].getSelectedItem() + "',1)" +
+						+ Main.divDaten[5].getSelectedItem() + "', '"
+						+ Main.divDaten[6].getSelectedItem() + "', '"
+						+ Main.divDaten[7].getSelectedItem() + "', '"
+						+ Main.divDaten[8].getSelectedItem() +"',1)" +
 								"ON DUPLICATE KEY UPDATE " +
 						" kvorname = '"+Main.kvorname.getText()+"', " +
 						" kbeiname = '"+Main.kbeiname.getText()+"', " +
@@ -171,6 +177,9 @@ public class GuiDatenInDB {
 						" kstaat = '"+Main.kstaat.getText()+"', " +
 						" kkrankenkasse = '"+Main.kkrankenkasse.getText()+"', " +
 						" khausarzt = '"+Main.khausarzt.getText()+"', " +
+						" tag_ersteinschulung = '"+Main.tag_ersteinschulung.getSelectedItem() +"', " +
+						" monat_ersteinschulung = '"+Main.monat_ersteinschulung.getSelectedItem() +"', " +
+						" jahr_ersteinschulung = '"+Main.jahr_ersteinschulung.getSelectedItem() +"', " +
 						" mname = '"+Main.mname.getText()+"', " +
 						" mvorname = '"+Main.mvorname.getText()+"', " +
 						" mstrasse = '"+Main.mstrasse.getText()+"', " +

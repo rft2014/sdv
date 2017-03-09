@@ -82,7 +82,7 @@ public class MakePdf {
 			final Font subtitle = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
 			final Font rufname = new Font(Font.FontFamily.HELVETICA, 11, Font.ITALIC);
 			final Font txt = new Font(Font.FontFamily.HELVETICA, 11);
-			Chunk tab1 = new Chunk(new VerticalPositionMark(), 140, true);
+			Chunk tab1 = new Chunk(new VerticalPositionMark(), 180, true);
 		    Chunk tab2 = new Chunk(new VerticalPositionMark(), 240, true);
 		    Chunk tab3 = new Chunk(new DottedLineSeparator(), 450, true);
 
@@ -235,6 +235,10 @@ public class MakePdf {
 			document.add(new Chunk(tab1));
 			document.add(new Phrase(rs.getString("kstammschule"),txt));
 			document.add(Chunk.NEWLINE);
+			document.add(new Phrase("Datum der Ersteinschulung: ",section));
+			document.add(new Chunk(tab1));
+			document.add(new Phrase(rs.getString("tag_ersteinschulung")+"."+rs.getString("monat_ersteinschulung")+"."+rs.getString("jahr_ersteinschulung"),txt));
+			document.add(Chunk.NEWLINE);
 			document.add(new Phrase("Zugangsvoraussetzung: ",section));
 			document.add(new Chunk(tab1));
 			document.add(new Phrase(rs.getString("zugangsvoraussetzung"),txt));
@@ -315,7 +319,7 @@ public void createAnmeldungSA(String ausklasse, String inklasse,String filename)
 	try {
 		Statement listeSA = DBConnection.con.createStatement();
 		String fuerListeSA = "Select * FROM schuelerdaten WHERE ausklasse = '"
-				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' ORDER BY kname; ";
+				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND term = '1' ORDER BY kname; ";
 		ResultSet rs = listeSA.executeQuery(fuerListeSA);
 	
 		Document document = new Document(PageSize.A4.rotate());
@@ -328,7 +332,7 @@ public void createAnmeldungSA(String ausklasse, String inklasse,String filename)
 		// step 3
 		document.open();
 		
-		document.add(new Paragraph("Anmeldungen am von-Bülow-Gymnasium für Schuljahr 2014/15",title));
+		document.add(new Paragraph("Anmeldungen am von-Bülow-Gymnasium für Schuljahr "+Main.configData.JAHRGANG,title));
 		document.add(new Paragraph("Übergang von Klasse "+ausklasse + " in "+inklasse,title));
 		document.add(Chunk.NEWLINE);
 		PdfPTable table = new PdfPTable(new float[]{1,2,2,1,4,1,2,2});
@@ -389,7 +393,7 @@ public void createAnmeldungSA_probe(String ausklasse, String inklasse,String fil
 	try {
 		Statement listeSA = DBConnection.con.createStatement();
 		String fuerListeSA = "Select * FROM schuelerdaten WHERE ausklasse = '"
-				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND zugangsvoraussetzung = 'Probeunterricht' ORDER BY kname; ";
+				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND zugangsvoraussetzung = 'Probeunterricht' AND term = '1' ORDER BY kname; ";
 		ResultSet rs = listeSA.executeQuery(fuerListeSA);
 	
 		Document document = new Document(PageSize.A4.rotate());
@@ -402,7 +406,7 @@ public void createAnmeldungSA_probe(String ausklasse, String inklasse,String fil
 		// step 3
 		document.open();
 		
-		document.add(new Paragraph("Anmeldungen zum Probeunterricht \nvon-Bülow-Gymnasium, Schuljahr 2014/15",title));
+		document.add(new Paragraph("Anmeldungen zum Probeunterricht \nvon-Bülow-Gymnasium, Schuljahr 2017/18",title));
 		document.add(new Paragraph("Übergang von Klasse "+ausklasse + " in "+inklasse,title));
 		document.add(Chunk.NEWLINE);
 		PdfPTable table = new PdfPTable(new float[]{1,2,2,1,4,2});
@@ -454,22 +458,21 @@ public void createAnmeldungSA_probe(String ausklasse, String inklasse,String fil
 	}
 
 
-public void createKlassenliste(String klasse, String typ ,String filename){
+public void createKlassenlisteKurz(String klasse ,String filename){
 	final Font title = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD);
-	final Font zellinhalt = new Font(Font.FontFamily.HELVETICA, 8);
+	final Font zellinhalt = new Font(Font.FontFamily.HELVETICA, 18);
 	final Font header = new Font(Font.FontFamily.HELVETICA, 10,Font.BOLD);
-	//String gender = "";
-	//String lk = "";
+	
 	Connection con = getInstance();
 	if (con != null) {
 	}
 	try {
 		Statement klListe = DBConnection.con.createStatement();
 		String klassenliste = "Select * FROM schuelerdaten WHERE klasse = '"
-				+ klasse + "'  ORDER BY kname; ";
+				+ klasse + "' AND term = '1'  ORDER BY kname; ";
 		ResultSet rs = klListe.executeQuery(klassenliste);
 	
-		Document document = new Document(PageSize.A4.rotate());
+		Document document = new Document(PageSize.A4);
 		document.setMargins(36, 36, 36, 36);
 
 		// step 2
@@ -479,11 +482,20 @@ public void createKlassenliste(String klasse, String typ ,String filename){
 		// step 3
 		document.open();
 		document.add(new Paragraph("Klassenliste:  "+klasse ,title));
-		
-		PdfPTable table = new PdfPTable(new float[]{1,2,2,1,4,1,2,2});
+		document.add(Chunk.NEWLINE);
+		PdfPTable table = new PdfPTable(new float[]{1,3,3});
 		table.setHeaderRows(1);
+		table.addCell(new Phrase("lfd. Nr.",header));
+		table.addCell(new Phrase("Name, Vorname",header));
+		table.addCell(new Phrase("Unterschrift",header));
+		int lfdNr = 0;
+		while (rs.next()){
+		lfdNr += 1;	
+		table.addCell(new Phrase(String.valueOf(lfdNr),zellinhalt));	
+		table.addCell(new Phrase(rs.getString("kname")+", "+rs.getString("kvorname"),zellinhalt));
+		table.addCell("");
 		
-		
+		}
 		
 		document.add(table);
 		document.close();
@@ -495,5 +507,10 @@ public void createKlassenliste(String klasse, String typ ,String filename){
 	catch(FileNotFoundException fne){System.out.println(fne);}
 	catch(DocumentException de){System.out.println(de);}
 	}
+
+
+
+
 }
+
 

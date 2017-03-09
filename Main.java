@@ -31,17 +31,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 
 public class Main extends JFrame {
+	/**
+	 * 
+	 */
+	
+	
+	private static final long serialVersionUID = -1623844613461526099L;
 	public static String csvDatei = System.getProperty("user.home").concat("/sdv/gedeonListen.csv");
 	public static String klassenliste_long = System.getProperty("user.home").concat("/sdv/listen/klassenliste_long.tex");
 	public static String klassenliste_short = System.getProperty("user.home").concat("/sdv/listen/klassenliste_short.tex");
 	public static String klassenbuch = System.getProperty("user.home").concat("/sdv/listen/klassenbuch.tex");
 	public static String notenbuch = System.getProperty("user.home").concat("/sdv/listen/notenbuch.tex");
-	public static String OutDir = System.getProperty("user.home").concat("/sdv/reports/");
+	public static String OutDir = System.getProperty("user.home").concat("/sdv/");
 	
 	JPanel panel1;
 	JPanel panel2;
@@ -83,12 +90,15 @@ public class Main extends JFrame {
 	public static JTextField kstammschule; // 35
 	public static JTextField geschwistername;// 36
 	public static JTextArea bemerkungen; // 0
-	public static JComboBox zugangsvoraussetzung;// 0
-	public static JComboBox sorgeberechtigung;// 0
-	public static JComboBox ausklasse;// 1
-	public static JComboBox inklasse;// 2
-	public static JComboBox klasse;//3
-	public static JComboBox zweiteFremdsprache;//4
+	public static JComboBox<String> zugangsvoraussetzung;// 0
+	public static JComboBox<String> sorgeberechtigung;// 0
+	public static JComboBox<String> ausklasse;// 1
+	public static JComboBox<String> inklasse;// 2
+	public static JComboBox<String> klasse;//3
+	public static JComboBox<String> zweiteFremdsprache;//4
+	public static JComboBox<String> tag_ersteinschulung;//5
+	public static JComboBox<String> monat_ersteinschulung;//6
+	public static JComboBox<String> jahr_ersteinschulung;//7
 	public static JRadioButton maennlich;// sex 0
 	public static JRadioButton weiblich;
 	public static JRadioButton geschwister_ja;// geschwister 1
@@ -110,8 +120,16 @@ public class Main extends JFrame {
 			"aus anderem Gymnasium", "Gemeinschaftsschule" };
 	public static final String[] KLASSE = {"", "4", "5", "6", "7", "8", "9",
 			"10", "11", "12" };
-	public static final String[] VBGKLASSE = {"","5/1", "5/2", "5/3"};
+	public static final String[]  VBGKLASSE= {"","5a", "5b", "5c"};
+	public static final String[] KLASSENLISTENTYP = {"kurz","lang"};
 	private static final String[] FREMDSPRACHE = {"","Latein", "Französisch"};
+	private static final String[] TAG_ERSTEINSCHULUNG = {"","01", "02","03","04","05","06",
+		"07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24",
+		"25", "26", "27","28","29","30","31"};
+	private static final String[] MONAT_ERSTEINSCHULUNG = {"","01", "02","03","04","05","06","07",
+		"08","09","10","11","12"};
+	private static final String[] JAHR_ERSTEINSCHULUNG = {"","2005", "2006","2007","2008","2009",
+			"2010","2011","2012","2013","2014","2015"};
 	//static String anzeigeName = "";  // anzeige variable werden auf dem 2. Panel angezeigt
 	//static String anzeigeVorname = "";// um die Uebersichtlichkeit zu verbessern
 	//static String anzeigeOrt = "";
@@ -119,9 +137,11 @@ public class Main extends JFrame {
 	public static JLabel lblNewLabel_46;
 	public static JLabel lblNewLabel_47;
 	
+	public static ConfigurationData configData = new ConfigurationData();
+	
 	// Objekte in Arrays für Abfrage per Schleife
 	static JTextField[] persDaten = new JTextField[37];
-	static JComboBox[] divDaten = new JComboBox[6];
+	static JComboBox[] divDaten = new JComboBox[9];
 	static JTextArea[] bemerk = new JTextArea[1];
 	static JRadioButton[] booli = new JRadioButton[12];
 	static ButtonGroup[]  boolgroups = new ButtonGroup[6];//wird zum clearen gebraucht
@@ -139,27 +159,29 @@ public class Main extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});
-	}
-
+		});	
+		}
+	
+	
 	/**
-	 * Create the frame.
+	 * Load propertiesFile
 	 */
+	
 	public Main() {
-		
-		new File(System.getProperty("user.home").concat("/sdv/reports/listen/")).mkdirs();
-		new File(System.getProperty("user.home").concat("/sdv/reports/schülerdatenblätter/")).mkdirs();
+	
+		new File(System.getProperty("user.home").concat("/sdv/listen/")).mkdirs();
+		new File(System.getProperty("user.home").concat("/sdv/schülerdatenblätter/")).mkdirs();
 		setTitle("Anmeldung an das von-Bülow-Gymnasium, Neudietendorf -- Datenerfassung gemäß § 136 ThürSchO");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent event) {
-                    closeApp();
-            }
-        }
-     );    
+          public void windowClosing(WindowEvent event) {
+                  closeApp();
+          }
+      }
+   );    
 			
-		setBounds(100, 100, 1000, 700);
+		setBounds(0, 0, 1000, 700);
 
 		JButton allesSpeichernBtn = new JButton("Eingaben speichern");
 
@@ -173,10 +195,16 @@ public class Main extends JFrame {
 		setJMenuBar(menuBar);
 
 		JMenu mnNewMenu = new JMenu("Schüler");
-		menuBar.add(mnNewMenu);
-		
 		JMenu mnNewMenu_1 = new JMenu("Listen");
+		JMenu mnNewMenu_2 = new JMenu("Datenexport");
+		
+	if (Main.configData.USER_HAS_PERMISSION == true)
+	{
+		menuBar.add(mnNewMenu);
 		menuBar.add(mnNewMenu_1);
+		menuBar.add(mnNewMenu_2);
+	}
+	else{}
 		
 		JMenuItem mntmNewMenuItem_11 = new JMenuItem("Klassenlisten");
 		mnNewMenu_1.add(mntmNewMenuItem_11);
@@ -194,6 +222,26 @@ public class Main extends JFrame {
 			//	some code
 		MakeListen ml = new MakeListen();
 		ml.setVisible(true);
+			}
+		});
+		
+		JMenuItem mntmNewMenuItem_13 = new JMenuItem("Datenexport für PrimeLine");
+		mnNewMenu_2.add(mntmNewMenuItem_13);
+		mntmNewMenuItem_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+			//	some code
+		MakeExportFile export = new MakeExportFile();
+		export.setVisible(true);
+			}
+		});
+		
+		JMenuItem mntmNewMenuItem_14 = new JMenuItem("Datenexport für Ilias Benutzeranmeldung");
+		mnNewMenu_2.add(mntmNewMenuItem_14);
+		mntmNewMenuItem_14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+			//	some code
+		MakeIliasUserInsertFile ilias = new MakeIliasUserInsertFile();
+		ilias.setVisible(true);
 			}
 		});
 
@@ -214,8 +262,8 @@ public class Main extends JFrame {
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 
-				//Klassenstatistik stat = new Klassenstatistik();
-			//	Klassenstatistik.klassenzusammensetzung();
+				Klassenzusammensetzung stat = new Klassenzusammensetzung();
+				stat.klassenzusammensetzung();
 			}
 		});
 
@@ -233,6 +281,7 @@ public class Main extends JFrame {
 		panela.setBorder(new TitledBorder(null, "Kind", TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		panela.setLayout(new MigLayout("", "[][][][][][grow][][]", "[][][][][]"));
+		
 		// ////////////////////////////////////////////
 		JLabel lblNewLabel_1 = new JLabel("1. Vorname(Rufname)");
 		panela.add(lblNewLabel_1, "cell 0 0");
@@ -360,7 +409,30 @@ public class Main extends JFrame {
 		persDaten[12] = khausarzt;
 		JLabel lblNewLabel_34 = new JLabel("vorherige Schule");
 		panela.add(lblNewLabel_34, "cell 0 4");
+		
+		JLabel lblNewLabel_50 = new JLabel("Einschulungsdatum");
+		panela.add(lblNewLabel_50, "cell 0 5");
 
+	
+		
+		tag_ersteinschulung = new JComboBox<String>(TAG_ERSTEINSCHULUNG);
+		panela.add(tag_ersteinschulung);
+		tag_ersteinschulung.setName("tag_ersteinschulung");
+		divDaten[6] = tag_ersteinschulung;
+		tag_ersteinschulung.setSelectedItem("01");
+		
+		monat_ersteinschulung = new JComboBox<String>(MONAT_ERSTEINSCHULUNG);
+		panela.add(monat_ersteinschulung);
+		monat_ersteinschulung.setName("monat_ersteinschulung");
+		divDaten[7] = monat_ersteinschulung;
+		monat_ersteinschulung.setSelectedItem("08");
+		
+		jahr_ersteinschulung = new JComboBox<String>(JAHR_ERSTEINSCHULUNG);
+		panela.add(jahr_ersteinschulung);
+		jahr_ersteinschulung.setName("jahr_ersteinschulung");
+		divDaten[8] = jahr_ersteinschulung;
+		jahr_ersteinschulung.setSelectedItem("2013");
+		
 		kstammschule = new JTextField();
 		panela.add(kstammschule, "cell 1 4 8 1");
 		kstammschule.setColumns(100);
@@ -638,7 +710,7 @@ public class Main extends JFrame {
 		JLabel lblNewLabel_35 = new JLabel("Zugangsvoraussetzung");
 		panelb.add(lblNewLabel_35);
 
-		zugangsvoraussetzung = new JComboBox(ZUGANGSVORAUSSETZUNGEN);
+		zugangsvoraussetzung = new JComboBox<String>(ZUGANGSVORAUSSETZUNGEN);
 		panelb.add(zugangsvoraussetzung, "wrap");
 		zugangsvoraussetzung.setName("zugangsvoraussetzung");
 		divDaten[0] = zugangsvoraussetzung;
@@ -647,7 +719,7 @@ public class Main extends JFrame {
 		JLabel lblNewLabel_36 = new JLabel("Sorgeberechtigt");
 		panelb.add(lblNewLabel_36);
 
-		sorgeberechtigung = new JComboBox(SORGEBERECHTIGUNGEN);
+		sorgeberechtigung = new JComboBox<String>(SORGEBERECHTIGUNGEN);
 		panelb.add(sorgeberechtigung, "wrap");
 		sorgeberechtigung.setName("sorgeberechtigung");
 		divDaten[1] = sorgeberechtigung;
@@ -750,14 +822,14 @@ public class Main extends JFrame {
 		JLabel lblNewLabel_42 = new JLabel("Übergang ans vBG aus Klasse");
 		panelb.add(lblNewLabel_42);
 
-		ausklasse = new JComboBox(KLASSE);
+		ausklasse = new JComboBox<String>(KLASSE);
 		panelb.add(ausklasse, "split 3");
 		ausklasse.setName("ausklasse");
 		divDaten[2] = ausklasse;
 		JLabel lblNewLabel_43 = new JLabel("in Klasse");
 		panelb.add(lblNewLabel_43);
 
-		inklasse = new JComboBox(KLASSE);
+		inklasse = new JComboBox<String>(KLASSE);
 		panelb.add(inklasse, "wrap");
 		inklasse.setName("inklasse");
 		divDaten[3] = inklasse;
@@ -778,21 +850,26 @@ public class Main extends JFrame {
 		JLabel lblNewLabel_48 = new JLabel("Kommt in Klasse:");
 		panelb.add(lblNewLabel_48);
 
-		klasse = new JComboBox(VBGKLASSE);
+		klasse = new JComboBox<String>(VBGKLASSE);
 		panelb.add(klasse, "wrap");
 		klasse.setName("klasse");
 		divDaten[4] = klasse;
 		JLabel lblNewLabel_49 = new JLabel("2. Fremdsprache ab Klasse 6");
 		panelb.add(lblNewLabel_49);
 
-		zweiteFremdsprache = new JComboBox(FREMDSPRACHE);
+		zweiteFremdsprache = new JComboBox<String>(FREMDSPRACHE);
 		panelb.add(zweiteFremdsprache, "wrap");
 		zweiteFremdsprache.setName("zweiteFremdsprache");
 		divDaten[5] = zweiteFremdsprache;
 		
 
 		getContentPane().add(allesSpeichernBtn, "cell 3 1,alignx right,aligny top");
-		getContentPane().add(schuelerAuswahlMenueBtn, "cell 1 1,alignx left,aligny top");
+		
+		if (Main.configData.USER_HAS_PERMISSION == true)
+		{
+		getContentPane().add(schuelerAuswahlMenueBtn, "cell 1 1,alignx left,aligny top");//fuer Eltern abgeschaltet
+		}
+		else{}
 		//getContentPane().add(schuelerDatenblattAusdruckBtn, "cell 0 1,alignx left,aligny top");
 
 		allesSpeichernBtn.addActionListener(new ActionListener() {
@@ -811,6 +888,7 @@ public class Main extends JFrame {
 
 					DBConnection.createTables();
 					GuiDatenInDB.werteInDB();
+					
 
 				}
 
@@ -853,7 +931,7 @@ public class Main extends JFrame {
 			boolgroups[i].clearSelection();
 		}
 		
-		for (int i = 0;i<6;i++){
+		for (int i = 0;i<9;i++){
 			divDaten[i].setSelectedItem("");
 		}
 		
