@@ -62,7 +62,7 @@ public class makeXLSX {
     XSSFRow headerRow = arbeitsblatt.createRow(0);
     headerRow.setHeightInPoints(30);
     XSSFCell titleCell = headerRow.createCell(0);
-    titleCell.setCellValue("Anmeldung zur Aufnahmeprüfung ans Gymnasium 2016");
+    titleCell.setCellValue("Anmeldung zur Aufnahmeprüfung ans Gymnasium "+Main.configData.JAHRGANG);
     titleCell.setCellStyle(styles.get("title"));
     
     XSSFRow subHeaderRow = arbeitsblatt.createRow(1);

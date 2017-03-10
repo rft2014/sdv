@@ -106,7 +106,7 @@ public class MakeListen extends JFrame {
 					MakePdf mp = new MakePdf();
 					mp.createAnmeldungSA_probe(ausKl.getSelectedItem().toString(),
 							inKl.getSelectedItem().toString(), Main.OutDir
-									+ "/listen/"
+									+ "listen/"
 									+ "Anmeldungen_"
 									+ ausKl.getSelectedItem().toString() + "_"
 									+ inKl.getSelectedItem().toString()
@@ -123,7 +123,7 @@ public class MakeListen extends JFrame {
 					MakePdf mp = new MakePdf();
 					mp.createAnmeldungSA(ausKl.getSelectedItem().toString(),
 							inKl.getSelectedItem().toString(), Main.OutDir
-									+ "/listen/"
+									+ "listen/"
 									+ "Anmeldungen_"
 									+ ausKl.getSelectedItem().toString() + "_"
 									+ inKl.getSelectedItem().toString()
@@ -140,7 +140,7 @@ public class MakeListen extends JFrame {
 				{
 					
 					Runtime.getRuntime().exec( "evince "+ Main.OutDir
-							+ "/listen/"
+							+ "listen/"
 							+ "Anmeldungen_"
 							+ ausKl.getSelectedItem().toString() + "_"
 							+ inKl.getSelectedItem().toString()
@@ -162,7 +162,7 @@ public class MakeListen extends JFrame {
 					
 					makeXLSX.writeXLSXFile(ausKl.getSelectedItem().toString(),
 							inKl.getSelectedItem().toString(), Main.OutDir
-									+ "/listen/"
+									+ "listen/"
 									+ "Aufnahmeprüfung_"
 									+ ausKl.getSelectedItem().toString() + "_"
 									+ inKl.getSelectedItem().toString()
@@ -196,7 +196,7 @@ public class MakeListen extends JFrame {
 				{
 					
 					Runtime.getRuntime().exec( "soffice "+ Main.OutDir
-							+ "/listen/"
+							+ "listen/"
 							+ "Aufnahmeprüfung_"
 							+ ausKl.getSelectedItem().toString() + "_"
 							+ inKl.getSelectedItem().toString()
