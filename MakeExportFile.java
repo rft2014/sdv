@@ -86,7 +86,7 @@ public class MakeExportFile extends JFrame{
 			FileWriter fw = new FileWriter(filename);
 		    BufferedWriter bw = new BufferedWriter(fw);
 		    bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"); 
-		    bw.write("<schuljahr2015_16>");
+		    bw.write("<schuljahr"+Main.configData.JAHRGANG+">");
 		    
 		   while (rs.next()){
 			bw.write("<schülerknoten>");
@@ -129,6 +129,9 @@ public class MakeExportFile extends JFrame{
 		    bw.write("<hausarzt>");
 		    bw.write(rs.getString("khausarzt"));
 		    bw.write("</hausarzt>");
+		    bw.write("<ersteinschulung>");
+		    bw.write(rs.getString("tag_ersteinschulung")+"."+rs.getString("monat_ersteinschulung")+"."+rs.getString("jahr_ersteinschulung"));
+		    bw.write("</ersteinschulung>");
 		    bw.write("<geschlecht>");
 		    if (rs.getString("maennlich").equals("1"))
 		    {
@@ -231,7 +234,7 @@ public class MakeExportFile extends JFrame{
 		    
 		   }
 		   
-		    bw.write("</schuljahr2015_16>");
+		    bw.write("</schuljahr"+Main.configData.JAHRGANG+">");
 
  
 
