@@ -1,12 +1,9 @@
 package sdv;
 
-//import java.awt.BorderLayout;
-//import java.awt.Desktop;
-//import java.awt.EventQueue;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.io.File;
-//import java.io.IOException;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,7 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
 
-//import com.itextpdf.text.DocumentException;
+
 
 
 public class AuswahlSchueler extends JFrame {
@@ -28,7 +25,7 @@ public class AuswahlSchueler extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	//private JList<String> list;
+	
 
 	/**
 	 * Erzeugt Auswahlfenster unter Datei > Schüler  um Datensätze auszuwählen
@@ -48,8 +45,9 @@ public class AuswahlSchueler extends JFrame {
 		contentPane.add(scrollPane, "cell 1 3,grow");
 		
 	
-		//final JList<String>list = new JList<String>(DBDatenInGui.stringFuerAuswahlMenu());
+	
 		final JList<String>list = new JList<String>();
+		
 		final class AktualisiereKlassenzusammensetzung implements Runnable
 		{
 		  @Override public void run()
@@ -63,7 +61,7 @@ public class AuswahlSchueler extends JFrame {
 						Thread.sleep(60000);
 						
 					}catch(Exception e){};
-		//list.setListData(DBDatenInGui.stringFuerAuswahlMenu());
+		
 			}
   	}
 }
