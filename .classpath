@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="src/" kind="src" path=""/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/itextpdf-5.4.5.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/itext-pdfa-5.4.5.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/itext-xtra-5.4.5.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/miglayout-swing.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/poi-3.14.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/poi-ooxml-3.14.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/poi-ooxml-schemas-3.14.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/swingx-all-1.6.4.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="/home/rft/workspace_sdv/resources/mysql-connector-java-5.1.29/mysql-connector-java-5.1.29-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
