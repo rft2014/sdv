@@ -23,10 +23,12 @@ public class SerienbriefIliasAnmeldungen {
  		"Sie k\"onnen das  pers\"onliche Passwort  Ihres Kindes jederzeit in den per\"onlichen Einstellungen des Lernmanagementsystems \"andern. " +
  		"Aber bitte informieren Sie Ihr Kind dar\"uber, da wie die Zug\"ange im Unterricht ben\"otigen.\\\\[.5cm] ";
  final static String beiFragen = "Bei Fragen oder Kritik k\"onnen Sie sich jederzeit an mich oder direkt an den Systemadministrator wenden. " +
- 		"Sie erreichen ihn telefonisch unter der Nummer: 0163 3342263 oder per E-Mail: \\url{admin@von-buelow-gymnasium.de}. Bitte scheuen Sie sich nicht von diesen" +
+ 		"Sie erreichen ihn telefonisch unter der Nummer: 0176 45905952 oder per E-Mail: \\url{admin@von-buelow-gymnasium.de}. Bitte scheuen Sie sich nicht von diesen" +
  		" M\"oglichkeiten Gebrauch zu machen.\\\\[1.5cm]"; 
-final static String Brieftext_3 =" Das Passwort Ihres Kindes k\"onnen Sie jederzeit in den pers\"onlichen Einstellungen des Lernmanagementsystems \"andern. Aber bitte achten Sie darauf, dass Ihr Kind sein Passwort kennt, " +
-		"denn wir ben\"otigen die Zug\"ange im Unterricht. \\\\ "; 
+final static String Brieftext_3 =" Die Passw\"orter k\"onnen Sie in den pers\"onlichen Einstellungen des Lernmanagementsystems \"andern. \\\\ "; 
+final static String ElternAccount = "Zur Erweiterung unseres Onlineangebotes und zur Erleichterung der organisatorischen Abl"+
+		 "\"aufe gibt es ab diesem Jahr separate Zug\"ange f\"ur die Eltern. Wir gehen davon aus, dass Informationen, "
+		 + "die uns \"uber diesen Account zugestellt werden, von Ihnen als Eltern authentisiert sind.\\\\";
 final static String Gruss = "Mit freundlichen Grüßen,\\\\[.5cm]" +
 		"Brigitte Teichert\\\\\\small{(Teamleiter 5/6)}\\\\[1.5cm]" +
  "Kenntnis u. Genehmigung\\\\ gez. OStD U. Rögner-Beckert\\\\ Schulleiterin";
