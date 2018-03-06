@@ -162,7 +162,8 @@ public class GuiDatenInDB {
 						+ Main.divDaten[5].getSelectedItem() + "', '"
 						+ Main.divDaten[6].getSelectedItem() + "', '"
 						+ Main.divDaten[7].getSelectedItem() + "', '"
-						+ Main.divDaten[8].getSelectedItem() +"',1)" +
+						+ Main.divDaten[8].getSelectedItem() + "', '"
+						+ Main.configData.AKTUELLER_TERM + "')"+
 								"ON DUPLICATE KEY UPDATE " +
 						" kvorname = '"+Main.kvorname.getText()+"', " +
 						" kbeiname = '"+Main.kbeiname.getText()+"', " +

@@ -17,6 +17,7 @@ public class  ConfigurationData {
 	public String TAG_ERSTEINSCHULUNG = "";
 	public String MONAT_ERSTEINSCHULUNG = "";
 	public String JAHR_ERSTEINSCHULUNG = "";
+	public String AKTUELLER_TERM = "";
 	public ConfigurationData() {
 
 
@@ -42,6 +43,7 @@ public class  ConfigurationData {
 			MONAT_ERSTEINSCHULUNG = prop.getProperty("monat_ersteinschulung");
 			JAHR_ERSTEINSCHULUNG = prop.getProperty("jahr_ersteinschulung");
 			USER_HAS_PERMISSION = Boolean.valueOf(prop.getProperty("user_has_permission"));
+			AKTUELLER_TERM = prop.getProperty("aktueller_term");
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {

@@ -112,7 +112,7 @@ public class DBConnection {
 						"tag_ersteinschulung VARCHAR(2)," +
 						"monat_ersteinschulung VARCHAR(2),"+
 						"jahr_ersteinschulung VARCHAR(4),"+
-						"term TINYINT(4)," +
+						"term VARCHAR(2)," +
 						"PRIMARY KEY (uid)," +
 						"UNIQUE INDEX(kvorname, kbeiname, kname, kgeburtstag))";
 				//anlegen.executeUpdate(dropTable);
