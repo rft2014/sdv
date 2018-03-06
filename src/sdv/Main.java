@@ -128,8 +128,7 @@ public class Main extends JFrame {
 		"25", "26", "27","28","29","30","31"};
 	private static final String[] MONAT_ERSTEINSCHULUNG = {"","01", "02","03","04","05","06","07",
 		"08","09","10","11","12"};
-	private static final String[] JAHR_ERSTEINSCHULUNG = {"","2005", "2006","2007","2008","2009",
-			"2010","2011","2012","2013","2014","2015"};
+	private static final String[] JAHR_ERSTEINSCHULUNG = {"","2013","2014","2015","2016", "2017", "2018", "2019","2020"};
 	//static String anzeigeName = "";  // anzeige variable werden auf dem 2. Panel angezeigt
 	//static String anzeigeVorname = "";// um die Uebersichtlichkeit zu verbessern
 	//static String anzeigeOrt = "";
