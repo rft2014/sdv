@@ -13,6 +13,7 @@ public class Klassenzusammensetzung extends JFrame {
 	
 
 	private static final long serialVersionUID = 1L;
+	private static final String akt_term = Main.configData.AKTUELLER_TERM;
 
 	private static Connection getInstance() {
 		if (DBConnection.con == null)
@@ -121,15 +122,15 @@ public class Klassenzusammensetzung extends JFrame {
 						
 					}catch(Exception e){};
 		
-				lblgesamt5a_wert.setText(schuelerzahl("5a", "","1"));
-				lblgesamt5b_wert.setText(schuelerzahl("5b", "","1"));
-				lblgesamt5c_wert.setText(schuelerzahl("5c", "","1"));
-				lblKlasseAM_wert.setText(schuelerzahl("5a", "1","1"));
-				lblKlasseAW_wert.setText(schuelerzahl("5a", "0","1"));
-				lblKlasseBM_wert.setText(schuelerzahl("5b", "1","1"));
-				lblKlasseBW_wert.setText(schuelerzahl("5b", "0","1"));
-				lblKlasseCM_wert.setText(schuelerzahl("5c", "1","1"));
-				lblKlasseCW_wert.setText(schuelerzahl("5c", "0","1"));
+				lblgesamt5a_wert.setText(schuelerzahl("5a", "",akt_term));
+				lblgesamt5b_wert.setText(schuelerzahl("5b", "",akt_term));
+				lblgesamt5c_wert.setText(schuelerzahl("5c", "",akt_term));
+				lblKlasseAM_wert.setText(schuelerzahl("5a", "1",akt_term));
+				lblKlasseAW_wert.setText(schuelerzahl("5a", "0",akt_term));
+				lblKlasseBM_wert.setText(schuelerzahl("5b", "1",akt_term));
+				lblKlasseBW_wert.setText(schuelerzahl("5b", "0",akt_term));
+				lblKlasseCM_wert.setText(schuelerzahl("5c", "1",akt_term));
+				lblKlasseCW_wert.setText(schuelerzahl("5c", "0",akt_term));
 					}
 		  	}
 		}
@@ -155,15 +156,15 @@ t1.start();
 			
 			if (geschlecht == "")
 			{
-			abfrage = "SELECT * FROM schuelerdaten WHERE klasse = '"+klasse+"' AND term = '1' ";
+			abfrage = "SELECT * FROM schuelerdaten WHERE klasse = '"+klasse+"' AND term = '"+akt_term+"' ";
 			}
 			if (geschlecht == "0")
 			{
-			abfrage = "SELECT * FROM schuelerdaten WHERE klasse = '"+klasse+"' AND term = '1' AND maennlich = '0' ";
+			abfrage = "SELECT * FROM schuelerdaten WHERE klasse = '"+klasse+"' AND term = '"+akt_term+"' AND maennlich = '0' ";
 			}
 			if (geschlecht == "1")
 			{
-			abfrage = "SELECT * FROM schuelerdaten WHERE klasse = '"+klasse+"' AND term = '1' AND maennlich = '1' ";
+			abfrage = "SELECT * FROM schuelerdaten WHERE klasse = '"+klasse+"' AND term = '"+akt_term+"' AND maennlich = '1' ";
 			}
 			rs = anzahlDerSchueler.executeQuery(abfrage);
 		
