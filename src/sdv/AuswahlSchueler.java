@@ -149,7 +149,7 @@ datenblattAusdruck.addActionListener(new ActionListener() {
 		MakePdf mp = new MakePdf();
 		
 		try{
-		mp.createSchuelerDatenBlatt(Main.OutDir +"/schülerdatenblätter/" + list.getSelectedValue().toString() + ".pdf",list.getSelectedValue().toString() );
+		mp.createSchuelerDatenBlatt(Main.OutDir +"/schülerdatenblätter/" + list.getSelectedValue().toString().replaceAll(" ","") + ".pdf",list.getSelectedValue().toString() );
 		}catch(NullPointerException npe)
 		{
 			JOptionPane.showMessageDialog(null,"Sie müssen erst einen Datensatz auswählen. Die Systemmeldung lautet: \n"+npe,"Upps, eine Fehlermeldung!"
@@ -158,7 +158,7 @@ datenblattAusdruck.addActionListener(new ActionListener() {
 		try
 		{
 			//Runtime.getRuntime().exec("okular /skole/tjener/home0/rolteich/sdv/listen/knachname,krufname-8.pdf");
-			Runtime.getRuntime().exec( "evince " + Main.OutDir +"/schülerdatenblätter/"+ list.getSelectedValue().toString() + ".pdf");
+			Runtime.getRuntime().exec( "evince " + Main.OutDir +"/schülerdatenblätter/"+ list.getSelectedValue().toString().replaceAll(" ","") + ".pdf");
 		 // Desktop.getDesktop().open( new File(Main.OutDir + list.getSelectedValue().toString() + ".pdf")) ;
 			Main.clearGui();
 		}
