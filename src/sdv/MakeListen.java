@@ -110,7 +110,7 @@ public class MakeListen extends JFrame {
 									+ "Anmeldungen_"
 									+ ausKl.getSelectedItem().toString() + "_"
 									+ inKl.getSelectedItem().toString()
-									+ ".pdf");
+									+ "_probe.pdf");
 				}else
 				{
 					JOptionPane.showMessageDialog(null,"Sie haben keine korrekte Auswahl getroffen.","Upps, eine Fehlermeldung!"

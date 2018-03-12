@@ -236,7 +236,7 @@ public class makeXLSX {
 	arbeitsblatt.autoSizeColumn(11);
 	
     	FileOutputStream out = 
-    		new FileOutputStream(new File(filename));
+    		new FileOutputStream(new File(filename),false);//false überschreibt alte datei
     
     	workbook.write(out);
     	out.close();

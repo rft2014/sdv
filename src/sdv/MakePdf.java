@@ -321,7 +321,7 @@ public void createAnmeldungSA(String ausklasse, String inklasse,String filename)
 	try {
 		Statement listeSA = DBConnection.con.createStatement();
 		String fuerListeSA = "Select * FROM schuelerdaten WHERE ausklasse = '"
-				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND term = '1' ORDER BY kname; ";
+				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND term = '"+Main.configData.AKTUELLER_TERM+"' ORDER BY kname; ";
 		ResultSet rs = listeSA.executeQuery(fuerListeSA);
 	
 		Document document = new Document(PageSize.A4.rotate());
@@ -395,7 +395,7 @@ public void createAnmeldungSA_probe(String ausklasse, String inklasse,String fil
 	try {
 		Statement listeSA = DBConnection.con.createStatement();
 		String fuerListeSA = "Select * FROM schuelerdaten WHERE ausklasse = '"
-				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND zugangsvoraussetzung = 'Probeunterricht' AND term = '1' ORDER BY kname; ";
+				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND zugangsvoraussetzung = 'Probeunterricht' AND term = '"+Main.configData.AKTUELLER_TERM+"' ORDER BY kname; ";
 		ResultSet rs = listeSA.executeQuery(fuerListeSA);
 	
 		Document document = new Document(PageSize.A4.rotate());
@@ -408,7 +408,7 @@ public void createAnmeldungSA_probe(String ausklasse, String inklasse,String fil
 		// step 3
 		document.open();
 		
-		document.add(new Paragraph("Anmeldungen zum Probeunterricht \nvon-Bülow-Gymnasium, Schuljahr 2017/18",title));
+		document.add(new Paragraph("Anmeldungen zum Probeunterricht \nvon-Bülow-Gymnasium, Schuljahr " + Main.configData.AKTUELLER_TERM ,title));
 		document.add(new Paragraph("Übergang von Klasse "+ausklasse + " in "+inklasse,title));
 		document.add(Chunk.NEWLINE);
 		PdfPTable table = new PdfPTable(new float[]{1,2,2,1,4,2});
@@ -471,7 +471,7 @@ public void createKlassenlisteKurz(String klasse ,String filename){
 	try {
 		Statement klListe = DBConnection.con.createStatement();
 		String klassenliste = "Select * FROM schuelerdaten WHERE klasse = '"
-				+ klasse + "' AND term = '1'  ORDER BY kname; ";
+				+ klasse + "' AND term = '"+Main.configData.AKTUELLER_TERM+"'  ORDER BY kname; ";
 		ResultSet rs = klListe.executeQuery(klassenliste);
 	
 		Document document = new Document(PageSize.A4);
