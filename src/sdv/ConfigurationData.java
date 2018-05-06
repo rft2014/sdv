@@ -18,6 +18,10 @@ public class  ConfigurationData {
 	public String MONAT_ERSTEINSCHULUNG = "";
 	public String JAHR_ERSTEINSCHULUNG = "";
 	public String AKTUELLER_TERM = "";
+	public String BRIEFTEXT1 = "";
+	public String BRIEFTEXT2 = "";
+	public String BRIEFTEXT3 = "";
+	public String BRIEFTEXT4 = "";
 	public ConfigurationData() {
 
 
@@ -44,6 +48,10 @@ public class  ConfigurationData {
 			JAHR_ERSTEINSCHULUNG = prop.getProperty("jahr_ersteinschulung");
 			USER_HAS_PERMISSION = Boolean.valueOf(prop.getProperty("user_has_permission"));
 			AKTUELLER_TERM = prop.getProperty("aktueller_term");
+			BRIEFTEXT1 = prop.getProperty("text1");
+			BRIEFTEXT2 = prop.getProperty("text2");
+			BRIEFTEXT3 = prop.getProperty("text3");
+			BRIEFTEXT4 = prop.getProperty("text4");
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {

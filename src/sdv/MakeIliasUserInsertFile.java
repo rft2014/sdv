@@ -121,6 +121,10 @@ public class MakeIliasUserInsertFile extends JFrame{
 	private String makeLoginName(String vorname, String nachname,
 			Integer anzahlDurchlauf) {
 		String vn = vorname.replace(" ","");
+		vn = vorname.replace("ä","ae");
+		vn = vorname.replace("ö","oe");
+		vn = vorname.replace("ü","ue");
+		vn = vorname.replace("ß","ss");
 		String login = "";
 		Integer i = anzahlDurchlauf;
 		login = vn + "_" + nachname.substring(0, i);
@@ -191,9 +195,9 @@ public class MakeIliasUserInsertFile extends JFrame{
 		    brief.write(SerienbriefIliasAnmeldungen.texVorspann);
 		   while (rs.next()){
 			String Passwort_K = pg.createPassword();
-			String Passwort_M = pg.createPassword();
+			//String Passwort_M = pg.createPassword();
 			String Login_K = makeLoginName(rs.getString("kvorname"), rs.getString("kname"), 1);
-			String Login_M = makeLoginName(rs.getString("mname"), rs.getString("mvorname"), 1);
+			//String Login_M = makeLoginName(rs.getString("mname"), rs.getString("mvorname"), 1);
 			bw.write("<User Action=\"Insert\" Language=\"de\">");
 		    bw.write("<Lastname>");
 		    bw.write(rs.getString("kname"));
@@ -225,17 +229,17 @@ public class MakeIliasUserInsertFile extends JFrame{
 		    if (rs.getString("klasse").equals("5a"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_2\" Type=\"Local\">");
-		    	bw.write("il_crs_member_21020");
+		    	bw.write("il_crs_member_25380");
 		    }
 		    if (rs.getString("klasse").equals("5b"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_3\" Type=\"Local\">");
-		    	bw.write("il_crs_member_21028");
+		    	bw.write("il_crs_member_25382");
 		    }
 		    if (rs.getString("klasse").equals("5c"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_4\" Type=\"Local\">");
-		    	bw.write("il_crs_member_21022");
+		    	bw.write("il_crs_member_25384");
 		    }
 		    
 		    bw.write("</Role>");
@@ -252,7 +256,7 @@ public class MakeIliasUserInsertFile extends JFrame{
 		    bw.write(validUntil.getText());
 		    bw.write("</TimeLimitUntil>");
 		    bw.write("</User>");
-		    /*Zugangsdaten fuer die Eltern resp. die Mutter*/
+		    /*Zugangsdaten fuer die Eltern resp. die Mutter
 		    bw.write("<User Action=\"Insert\" Language=\"de\">");
 		    bw.write("<Lastname>");
 		    bw.write(rs.getString("mname"));
@@ -276,23 +280,23 @@ public class MakeIliasUserInsertFile extends JFrame{
 		    if (rs.getString("klasse").equals("5a"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_5\" Type=\"Local\">");
-		    	bw.write("il_grp_member_21026");
+		    	bw.write("il_grp_member_25380");
 		    }
 		    if (rs.getString("klasse").equals("5b"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_6\" Type=\"Local\">");
-		    	bw.write("il_grp_member_21030");
+		    	bw.write("il_grp_member_25382");
 		    }
 		    if (rs.getString("klasse").equals("5c"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_7\" Type=\"Local\">");
-		    	bw.write("il_grp_member_21024");
+		    	bw.write("il_grp_member_25384");
 		    }
 		    bw.write("</Role>");
 		    bw.write("<UserDefinedField Id=\"_1\" Name=\"Klasse\">");
 		    bw.write(rs.getString("klasse")+"_Eltern");
 		    bw.write("</UserDefinedField>");
-		    bw.write("<UserDefinedField Id=\"_5\" Name=\"Referenz_Kind_Login\">");
+		   	bw.write("<UserDefinedField Id=\"_5\" Name=\"Referenz_Kind_Login\">");
 		    bw.write(Login_K);
 		    bw.write("</UserDefinedField>");
 		    bw.write("<TimeLimitUnlimited>");
@@ -304,7 +308,7 @@ public class MakeIliasUserInsertFile extends JFrame{
 		    bw.write("<TimeLimitUntil>");
 		    bw.write(validUntil.getText());
 		    bw.write("</TimeLimitUntil>");
-		    bw.write("</User>");
+		    bw.write("</User>");*/
 		    
 		    brief.write("\\textsf{\\rightline{{\\Huge von-B\\\"ulow-Gymnasium -- Neudietendorf}}\\\\[-10pt] \\rule{1.02\\linewidth}{0.5pt}}\\\\[3cm]");
 		    brief.write("Fam. "+rs.getString("kname")+"\\\\");
@@ -315,9 +319,9 @@ public class MakeIliasUserInsertFile extends JFrame{
 		    brief.write("Das Passwort des Kindes lautet: "+Passwort_K+"\\\\");
 		    brief.write("Der Benutzername des Kindes lautet: "+Login_K.replace("_", "\\_")+"\\\\[.5cm] ");
 		    //brief.write(SerienbriefIliasAnmeldungen.Brieftext_3+"\\\\[.5cm]");
-		    brief.write(SerienbriefIliasAnmeldungen.ElternAccount);
-		    brief.write("Das Passwort der Eltern lautet: "+Passwort_M+"\\\\");
-		    brief.write("Der Benutzername der Eltern lautet: "+Login_M.replace("_", "\\_")+"\\\\[.5cm] ");
+		    //brief.write(SerienbriefIliasAnmeldungen.ElternAccount);
+		    //brief.write("Das Passwort der Eltern lautet: "+Passwort_M+"\\\\");
+		    //brief.write("Der Benutzername der Eltern lautet: "+Login_M.replace("_", "\\_")+"\\\\[.5cm] ");
 		    brief.write(SerienbriefIliasAnmeldungen.Brieftext_3+"\\\\[.5cm]");
 		    brief.write(SerienbriefIliasAnmeldungen.beiFragen);
 		    brief.write(SerienbriefIliasAnmeldungen.Gruss);

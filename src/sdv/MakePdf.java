@@ -564,7 +564,7 @@ public void createKlassenlisteLang(String klasse ,String filename){
 		cellh2.setFixedHeight(72);
 		cellh2.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		table.addCell(cellh2);
-		PdfPCell cellh3 = new PdfPCell(new Phrase("Paßbild",header1));
+		PdfPCell cellh3 = new PdfPCell(new Phrase("Passbild",header1));
 		cellh3.setRotation(90);
 		cellh3.setFixedHeight(72);
 		cellh3.setVerticalAlignment(Element.ALIGN_MIDDLE);
