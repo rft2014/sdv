@@ -14,11 +14,12 @@ import java.util.Date;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-//import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
@@ -462,8 +463,8 @@ public void createAnmeldungSA_probe(String ausklasse, String inklasse,String fil
 
 public void createKlassenlisteKurz(String klasse ,String filename){
 	final Font title = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD);
-	final Font zellinhalt = new Font(Font.FontFamily.HELVETICA, 18);
-	final Font header = new Font(Font.FontFamily.HELVETICA, 10,Font.BOLD);
+	final Font zellinhalt = new Font(Font.FontFamily.HELVETICA, 14);
+	final Font header = new Font(Font.FontFamily.HELVETICA, 10);
 	
 	Connection con = getInstance();
 	if (con != null) {
@@ -487,14 +488,30 @@ public void createKlassenlisteKurz(String klasse ,String filename){
 		document.add(Chunk.NEWLINE);
 		PdfPTable table = new PdfPTable(new float[]{1,3,3});
 		table.setHeaderRows(1);
-		table.addCell(new Phrase("lfd. Nr.",header));
-		table.addCell(new Phrase("Name, Vorname",header));
-		table.addCell(new Phrase("Unterschrift",header));
+		PdfPCell cellh1 = new PdfPCell(new Phrase("lfd. Nr.",header));
+		cellh1.setFixedHeight(24);
+		cellh1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh1);
+		PdfPCell cellh2 = new PdfPCell(new Phrase("Name, Vorname",header));
+		cellh2.setFixedHeight(24);
+		cellh2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh2);
+		PdfPCell cellh3 = new PdfPCell(new Phrase("Unterschrift",header));
+		cellh3.setFixedHeight(24);
+		cellh3.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh3);
 		int lfdNr = 0;
 		while (rs.next()){
 		lfdNr += 1;	
-		table.addCell(new Phrase(String.valueOf(lfdNr),zellinhalt));	
-		table.addCell(new Phrase(rs.getString("kname")+", "+rs.getString("kvorname"),zellinhalt));
+		
+		PdfPCell cellb1 = new PdfPCell(new Phrase(String.valueOf(lfdNr),zellinhalt));
+		cellb1.setFixedHeight(22);
+		cellb1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		PdfPCell cellb2 = new PdfPCell(new Phrase(rs.getString("kname")+", "+rs.getString("kvorname"),zellinhalt));
+		cellb1.setFixedHeight(22);
+		cellb1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellb1);
+		table.addCell(cellb2);
 		table.addCell("");
 		
 		}
@@ -509,6 +526,102 @@ public void createKlassenlisteKurz(String klasse ,String filename){
 	catch(FileNotFoundException fne){System.out.println(fne);}
 	catch(DocumentException de){System.out.println(de);}
 	}
+
+
+public void createKlassenlisteLang(String klasse ,String filename){
+	final Font title = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD);
+	final Font zellinhalt = new Font(Font.FontFamily.HELVETICA, 14);
+	final Font header = new Font(Font.FontFamily.HELVETICA, 10);
+	final Font header1 = new Font(Font.FontFamily.HELVETICA, 10);
+	
+	Connection con = getInstance();
+	if (con != null) {
+	}
+	try {
+		Statement klListe = DBConnection.con.createStatement();
+		String klassenliste = "Select * FROM schuelerdaten WHERE klasse = '"
+				+ klasse + "' AND term = '"+Main.configData.AKTUELLER_TERM+"'  ORDER BY kname; ";
+		ResultSet rs = klListe.executeQuery(klassenliste);
+	
+		Document document = new Document(PageSize.A4);
+		document.setMargins(36, 36, 36, 36);
+
+		// step 2
+		PdfWriter.getInstance(document, new FileOutputStream(filename));
+		// PdfPCell cell;
+
+		// step 3
+		document.open();
+		document.add(new Paragraph("Klassenliste:  "+klasse ,title));
+		document.add(Chunk.NEWLINE);
+		PdfPTable table = new PdfPTable(new float[]{1,3,1,1,1,1,1});
+		table.setHeaderRows(1);
+		PdfPCell cellh1 = new PdfPCell(new Phrase("lfd. Nr.",header));
+		cellh1.setFixedHeight(72);
+		cellh1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh1);
+		PdfPCell cellh2 = new PdfPCell(new Phrase("Name, Vorname",header));
+		cellh2.setFixedHeight(72);
+		cellh2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh2);
+		PdfPCell cellh3 = new PdfPCell(new Phrase("Paßbild",header1));
+		cellh3.setRotation(90);
+		cellh3.setFixedHeight(72);
+		cellh3.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh3);
+		PdfPCell cellh4 = new PdfPCell(new Phrase("Bücherzettel",header1));
+		cellh4.setRotation(90);
+		cellh4.setFixedHeight(72);
+		cellh4.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh4);
+		PdfPCell cellh5 = new PdfPCell(new Phrase("GA-Vertrag",header1));
+		cellh5.setRotation(90);
+		cellh5.setFixedHeight(72);
+		cellh5.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh5);
+		PdfPCell cellh6 = new PdfPCell(new Phrase("Essensvertrag",header1));
+		cellh6.setRotation(90);
+		cellh6.setFixedHeight(72);
+		cellh6.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh6);
+		PdfPCell cellh7 = new PdfPCell(new Phrase("",header1));
+		cellh7.setFixedHeight(72);
+		cellh7.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellh7);
+		
+		int lfdNr = 0;
+		while (rs.next()){
+		lfdNr += 1;	
+		//table.addCell(new Phrase(String.valueOf(lfdNr),zellinhalt));	
+		//table.addCell(new Phrase(rs.getString("kname")+", "+rs.getString("kvorname"),zellinhalt));
+		PdfPCell cellb1 = new PdfPCell(new Phrase(String.valueOf(lfdNr),zellinhalt));
+		cellb1.setFixedHeight(22);
+		cellb1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		PdfPCell cellb2 = new PdfPCell(new Phrase(rs.getString("kname")+", "+rs.getString("kvorname"),zellinhalt));
+		cellb1.setFixedHeight(22);
+		cellb1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		table.addCell(cellb1);
+		table.addCell(cellb2);
+		table.addCell("");
+		table.addCell("");
+		table.addCell("");
+		table.addCell("");
+		table.addCell("");
+		
+		
+		}
+		
+		document.add(table);
+		document.close();
+	
+	
+	}
+	
+	catch(SQLException sqe){System.out.println(sqe);}
+	catch(FileNotFoundException fne){System.out.println(fne);}
+	catch(DocumentException de){System.out.println(de);}
+	}
+
 
 
 

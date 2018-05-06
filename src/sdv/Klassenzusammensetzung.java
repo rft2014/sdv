@@ -332,6 +332,8 @@ t1.start();
 		        anzahl = rs.getRow();
 		        rs.beforeFirst();
 		        rs.close();
+		      
+		        
 		    } 
 		    catch(Exception ex)  {
 		    }

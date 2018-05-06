@@ -70,6 +70,16 @@ public class Klassenlisten extends JFrame {
 						+ comboBoxKlasse.getSelectedItem().toString() + "_"
 						+ ".pdf");
 			}
+			
+			if (comboBoxListenTyp.getSelectedItem().toString() == "lang")
+			{
+				MakePdf mp = new MakePdf();
+				mp.createKlassenlisteLang(comboBoxKlasse.getSelectedItem().toString(),Main.OutDir
+						+ "/listen/"
+						+ "Klassenliste_lang_"
+						+ comboBoxKlasse.getSelectedItem().toString() + "_"
+						+ ".pdf");
+			}
 		}
 	});
 	}
