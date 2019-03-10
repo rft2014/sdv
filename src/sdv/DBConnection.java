@@ -66,6 +66,7 @@ public class DBConnection {
 						"kstaat VARCHAR(20)," +
 						"kkrankenkasse VARCHAR(100)," +
 						"khausarzt VARCHAR(100)," +
+						"rolle_als_sorgeberechtigter1 VARCHAR(50)," +
 						"mname VARCHAR(50)," +
 						"mvorname VARCHAR(50)," +
 						"mstrasse VARCHAR(50)," +
@@ -74,6 +75,7 @@ public class DBConnection {
 						"mtelpriv VARCHAR(50)," +
 						"mteldienst VARCHAR(50)," +
 						"memail VARCHAR(50)," +
+						"rolle_als_sorgeberechtigter2 VARCHAR(50)," +
 						"vname VARCHAR(50)," +
 						"vvorname VARCHAR(50)," +
 						"vstrasse VARCHAR(50)," +
@@ -91,8 +93,8 @@ public class DBConnection {
 						"kstammschule VARCHAR(100)," +
 						"geschwistername VARCHAR(50)," +
 						"bemerkungen VARCHAR(500)," +
-						"zugangsvoraussetzung VARCHAR(50)," +
-						"sorgeberechtigung VARCHAR(50)," +
+						"zugangsvoraussetzung VARCHAR(100)," +
+						"sorgeberechtigung VARCHAR(100)," +
 						"ausklasse VARCHAR(2)," +
 						"inklasse VARCHAR(2)," +
 						"maennlich BOOLEAN," +
@@ -112,6 +114,7 @@ public class DBConnection {
 						"tag_ersteinschulung VARCHAR(2)," +
 						"monat_ersteinschulung VARCHAR(2),"+
 						"jahr_ersteinschulung VARCHAR(4),"+
+						"anzahl_geschwister VARCHAR(2),"+
 						"term VARCHAR(2)," +
 						"PRIMARY KEY (uid)," +
 						"UNIQUE INDEX(kvorname, kbeiname, kname, kgeburtstag))";

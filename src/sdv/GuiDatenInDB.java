@@ -82,6 +82,7 @@ public class GuiDatenInDB {
 						+ Main.persDaten[34].getName() + ", "
 						+ Main.persDaten[35].getName() + ", "
 						+ Main.persDaten[36].getName() + ", "
+						+ Main.persDaten[37].getName() + ", "
 						+ Main.bemerk[0].getName() + ", "
 						+ Main.booli[0].getName() + ", "
 						+ Main.booli[1].getName() + ", "
@@ -103,7 +104,9 @@ public class GuiDatenInDB {
 						+ Main.divDaten[5].getName() + ", "
 						+ Main.divDaten[6].getName() + ", "
 						+ Main.divDaten[7].getName() + ", "
-						+ Main.divDaten[8].getName() + ",term) VALUES ('"
+						+ Main.divDaten[8].getName() + ", "
+						+ Main.divDaten[9].getName() + ", "
+						+ Main.divDaten[10].getName() + ",term) VALUES ('"
 						+ Main.persDaten[0].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèêáà -]", "") + "', '"
 						+ Main.persDaten[1].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèêáà -]", "") + "', '"
 						+ Main.persDaten[2].getText().replaceAll("[^a-zA-ZäöüÄÖÜßéèêáà -]", "") + "', '"
@@ -141,6 +144,7 @@ public class GuiDatenInDB {
 						+ Main.persDaten[34].getText() + "', '"
 						+ Main.persDaten[35].getText() + "', '"
 						+ Main.persDaten[36].getText() + "', '"
+						+ Main.persDaten[37].getText() + "', '"
 						+ Main.bemerk[0].getText() + "', '"
 						+ bool[0] + "', '"//Zahlenwert aus obenstehender Umwandlung
 						+ bool[1] + "', '"//der boolschen Werte der Radiobutton
@@ -163,6 +167,8 @@ public class GuiDatenInDB {
 						+ Main.divDaten[6].getSelectedItem() + "', '"
 						+ Main.divDaten[7].getSelectedItem() + "', '"
 						+ Main.divDaten[8].getSelectedItem() + "', '"
+						+ Main.divDaten[9].getSelectedItem() + "', '"
+						+ Main.divDaten[10].getSelectedItem() + "', '"
 						+ Main.configData.AKTUELLER_TERM + "')"+
 								"ON DUPLICATE KEY UPDATE " +
 						" kvorname = '"+Main.kvorname.getText()+"', " +
@@ -181,6 +187,7 @@ public class GuiDatenInDB {
 						" tag_ersteinschulung = '"+Main.tag_ersteinschulung.getSelectedItem() +"', " +
 						" monat_ersteinschulung = '"+Main.monat_ersteinschulung.getSelectedItem() +"', " +
 						" jahr_ersteinschulung = '"+Main.jahr_ersteinschulung.getSelectedItem() +"', " +
+						" rolle_als_sorgeberechtigter1 = '"+Main.rolle_als_sorgeberechtigter1.getSelectedItem() +"', " +
 						" mname = '"+Main.mname.getText()+"', " +
 						" mvorname = '"+Main.mvorname.getText()+"', " +
 						" mstrasse = '"+Main.mstrasse.getText()+"', " +
@@ -189,6 +196,7 @@ public class GuiDatenInDB {
 						" mtelpriv = '"+Main.mtelpriv.getText()+"', " +
 						" mteldienst = '"+Main.mteldienst.getText()+"', " +
 						" memail = '"+Main.memail.getText()+"', " +
+						" rolle_als_sorgeberechtigter2 = '"+Main.rolle_als_sorgeberechtigter2.getSelectedItem() +"', " +
 						" vname = '"+Main.vname.getText()+"', " +
 						" vvorname = '"+Main.vvorname.getText()+"', " +
 						" vstrasse = '"+Main.vstrasse.getText()+"', " +
@@ -205,6 +213,7 @@ public class GuiDatenInDB {
 						" otel = '"+Main.otel.getText()+"', " +
 						" kstammschule = '"+Main.kstammschule.getText()+"', " +
 						" geschwistername = '"+Main.geschwistername.getText()+"', " +
+						" anzahl_geschwister = '"+Main.anzahl_geschwister.getText()+"', " +
 						" bemerkungen = '"+Main.bemerkungen.getText()+"', " +
 						" zugangsvoraussetzung = '"+Main.zugangsvoraussetzung.getSelectedItem()+"', " +
 						" sorgeberechtigung = '"+Main.sorgeberechtigung.getSelectedItem()+"', " +
@@ -294,6 +303,7 @@ public static void updateDB(String auswahl){
 						" kstaat = '"+Main.kstaat.getText()+"', " +
 						" kkrankenkasse = '"+Main.kkrankenkasse.getText()+"', " +
 						" khausarzt = '"+Main.khausarzt.getText()+"', " +
+						" rolle_als_sorgeberechtigter1 = '"+Main.rolle_als_sorgeberechtigter1.getSelectedItem()+"', " +
 						" mname = '"+Main.mname.getText()+"', " +
 						" mvorname = '"+Main.mvorname.getText()+"', " +
 						" mstrasse = '"+Main.mstrasse.getText()+"', " +
@@ -302,6 +312,7 @@ public static void updateDB(String auswahl){
 						" mtelpriv = '"+Main.mtelpriv.getText()+"', " +
 						" mteldienst = '"+Main.mteldienst.getText()+"', " +
 						" memail = '"+Main.memail.getText()+"', " +
+						" rolle_als_sorgeberechtigter2 = '"+Main.rolle_als_sorgeberechtigter2.getSelectedItem()+"', " +
 						" vname = '"+Main.vname.getText()+"', " +
 						" vvorname = '"+Main.vvorname.getText()+"', " +
 						" vstrasse = '"+Main.vstrasse.getText()+"', " +
@@ -316,6 +327,7 @@ public static void updateDB(String auswahl){
 						" oplz = '"+Main.oplz.getText()+"', " +
 						" owohnort = '"+Main.owohnort.getText()+"', " +
 						" otel = '"+Main.otel.getText()+"', " +
+						" anzahl_geschwister = '"+Main.anzahl_geschwister.getText()+"',"+
 						" kstammschule = '"+Main.kstammschule.getText()+"', " +
 						" geschwistername = '"+Main.geschwistername.getText()+"', " +
 						" bemerkungen = '"+Main.bemerkungen.getText()+"', " +

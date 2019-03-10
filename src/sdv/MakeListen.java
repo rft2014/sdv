@@ -102,6 +102,7 @@ public class MakeListen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			if (probe.isSelected())
 			{
+				System.out.println("probe is selected");
 				if (ausKl.getSelectedItem().toString()!="" && inKl.getSelectedItem().toString()!=""){
 					MakePdf mp = new MakePdf();
 					mp.createAnmeldungSA_probe(ausKl.getSelectedItem().toString(),
@@ -138,7 +139,17 @@ public class MakeListen extends JFrame {
 				
 				try
 				{
-					
+					if(probe.isSelected())
+					{
+					Runtime.getRuntime().exec( "evince "+ Main.OutDir
+							+ "listen/"
+							+ "Anmeldungen_"
+							+ ausKl.getSelectedItem().toString() + "_"
+							+ inKl.getSelectedItem().toString()
+							+ "_probe.pdf");
+				 
+				}else
+				{
 					Runtime.getRuntime().exec( "evince "+ Main.OutDir
 							+ "listen/"
 							+ "Anmeldungen_"
@@ -147,6 +158,8 @@ public class MakeListen extends JFrame {
 							+ ".pdf");
 				 
 				}
+				}
+				
 				catch ( Exception /* IOException, URISyntaxException */ exc )
 				{
 				  exc.printStackTrace();

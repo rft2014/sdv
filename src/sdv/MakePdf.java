@@ -24,6 +24,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 
 /**
  * First iText example: Hello World.
@@ -33,7 +34,25 @@ public class MakePdf {
 	Date today = new Date();
 	SimpleDateFormat df = new SimpleDateFormat( "dd.MM.yyyy" );
 //	DateFormat df = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.SHORT);
-
+	public static ConfigurationData configData = new ConfigurationData();
+	private static final String PROBEUNTERRICHT_TEXT = configData.PROBEUNTERRICHT_TEXT;
+	private static final String PROBEUNTERRICHT_INDEX = configData.PROBEUNTERRICHT_INDEX;
+	private static final String ZEUGNIS_FEHLT_TEXT = configData.ZEUGNIS_FEHLT_TEXT;
+	private static final String ZEUGNIS_FEHLT_INDEX = configData.ZEUGNIS_FEHLT_INDEX;
+	private static final String EMPFEHLUNG_FEHLT_TEXT = configData.EMPFEHLUNG_FEHLT_TEXT;
+	private static final String EMPFEHLUNG_FEHLT_INDEX = configData.EMPFEHLUNG_FEHLT_INDEX;
+	private static final String SORGERECHTSERKLAERUNG_FEHLT_TEXT = configData.SORGERECHTSERKLAERUNG_FEHLT_TEXT;
+	private static final String SORGERECHTSERKLAERUNG_FEHLT_INDEX = configData.SORGERECHTSERKLAERUNG_FEHLT_INDEX;
+	private static final String NEGATIVATTEST_FEHLT_TEXT = configData.NEGATIVATTEST_FEHLT_TEXT;
+	private static final String NEGATIVATTEST_FEHLT_INDEX = configData.NEGATIVATTEST_FEHLT_INDEX;
+	private static final String PFLEGSCHAFTSNACHWEIS_FEHLT_TEXT = configData.PFLEGSCHAFTSNACHWEIS_FEHLT_TEXT;
+	private static final String PFLEGSCHAFTSNACHWEIS_FEHLT_INDEX = configData.PFLEGSCHAFTSNACHWEIS_FEHLT_INDEX;
+	private static final String VORMUNDSCHAFTSERKLAERUNG_FEHLT_TEXT = configData.VORMUNDSCHAFTSERKLAERUNG_FEHLT_TEXT;
+	private static final String VORMUNDSCHAFTSERKLAERUNG_FEHLT_INDEX = configData.VORMUNDSCHAFTSERKLAERUNG_FEHLT_INDEX;
+	private static final String[] ART_DER_ZUGANGSVORAUSSETZUNG = configData.ART_DER_ZUGANGSVORAUSSETZUNG;
+	private static final String[] ART_DER_SORGEBERECHTIGUNG = configData.ART_DER_SORGEBERECHTIGUNG;
+	private static final String FOTOERLAUBNIS = configData.FOTOERLAUBNIS;
+	private static final String DATENSCHUTZERKLAERUNG = configData.DATENSCHUTZERKLAERUNG;
 	private static Connection getInstance() {
 		if (DBConnection.con == null)
 			new DBConnection();
@@ -57,6 +76,7 @@ public class MakePdf {
 		String religion = "";
 		String ga = "";
 		String doppel = "";
+		boolean fehlende_Unterlagen = false;
 		Connection con = getInstance();
 		if (con != null) {
 		}
@@ -79,16 +99,30 @@ public class MakePdf {
 			if(rs.getString("oga_nein").equals("1")){ga = "nein";};
 			if(rs.getString("doppel_ja").equals("1")){doppel = "ja";};
 			if(rs.getString("doppel_nein").equals("1")){doppel = "nein";};
+			
+			if(rs.getString("zugangsvoraussetzung").equals(ART_DER_ZUGANGSVORAUSSETZUNG[Integer.parseInt(ZEUGNIS_FEHLT_INDEX)]) ||
+					(rs.getString("zugangsvoraussetzung").equals(ART_DER_ZUGANGSVORAUSSETZUNG[Integer.parseInt(EMPFEHLUNG_FEHLT_INDEX)])) ||
+					(rs.getString("sorgeberechtigung").equals(ART_DER_SORGEBERECHTIGUNG[Integer.parseInt(SORGERECHTSERKLAERUNG_FEHLT_INDEX)])) ||
+					(rs.getString("sorgeberechtigung").equals(ART_DER_SORGEBERECHTIGUNG[Integer.parseInt(NEGATIVATTEST_FEHLT_INDEX)])) ||
+					(rs.getString("sorgeberechtigung").equals(ART_DER_SORGEBERECHTIGUNG[Integer.parseInt(PFLEGSCHAFTSNACHWEIS_FEHLT_INDEX)])) ||
+					(rs.getString("sorgeberechtigung").equals(ART_DER_SORGEBERECHTIGUNG[Integer.parseInt(VORMUNDSCHAFTSERKLAERUNG_FEHLT_INDEX)])))
+		
+					{fehlende_Unterlagen = true;};
+			
 			final Font title = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD);
 			final Font section = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD);
-			final Font subtitle = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
+			final Font subtitle = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
 			final Font rufname = new Font(Font.FontFamily.HELVETICA, 11, Font.ITALIC);
+			final Font bestaetigung = new Font(Font.FontFamily.HELVETICA,9, Font.BOLD);
 			final Font txt = new Font(Font.FontFamily.HELVETICA, 11);
-			Chunk tab1 = new Chunk(new VerticalPositionMark(), 180, true);
+			final Font info = new Font(Font.FontFamily.HELVETICA,9);
+			Chunk tab1 = new Chunk(new VerticalPositionMark(), 160, true);
 		    @SuppressWarnings("unused")
 			Chunk tab2 = new Chunk(new VerticalPositionMark(), 240, true);
 		    Chunk tab3 = new Chunk(new DottedLineSeparator(), 450, true);
-
+		    Chunk tab4 = new Chunk(new VerticalPositionMark(), 300, true);
+		    Chunk tab5 = new Chunk(new VerticalPositionMark(), 440, true);
+		    Chunk sep  = new Chunk(new LineSeparator(0.5f,100,null,0,-5));
 			// step 1
 			Document document = new Document();
 			document.setMargins(72, 36, 60, 60);
@@ -147,7 +181,7 @@ public class MakePdf {
 			document.add(new Phrase(rs.getString("khausarzt"),txt));
 			document.add(Chunk.NEWLINE);
 			document.add(Chunk.NEWLINE);
-			document.add(new Phrase("Mutter",subtitle));
+			document.add(new Phrase(rs.getString("rolle_als_sorgeberechtigter1"),subtitle));
 			document.add(Chunk.NEWLINE);
 			document.add(new Phrase("Name: ",section));
 			document.add(new Chunk(tab1));
@@ -178,7 +212,7 @@ public class MakePdf {
 			document.add(new Phrase(rs.getString("memail"),txt));
 			document.add(Chunk.NEWLINE);
 			document.add(Chunk.NEWLINE);
-			document.add(new Phrase("Vater",subtitle));
+			document.add(new Phrase(rs.getString("rolle_als_sorgeberechtigter2"),subtitle));
 			document.add(Chunk.NEWLINE);
 			document.add(new Phrase("Name: ",section));
 			document.add(new Chunk(tab1));
@@ -261,7 +295,10 @@ public class MakePdf {
 			document.add(new Phrase("Zweite Fremdsprache: ",section));
 			document.add(new Chunk(tab1));
 			document.add(new Phrase(rs.getString("zweiteFremdsprache"),txt));
-			//document.add(new Phrase("  (unverbindlich)",txt));
+			document.add(Chunk.NEWLINE);
+			document.add(new Phrase("Anzahl der Geschwister: ",section));
+			document.add(new Chunk(tab1));
+			document.add(new Phrase(rs.getString("anzahl_geschwister"),txt));
 			document.add(Chunk.NEWLINE);
 			document.add(new Phrase("Geschwister am vBG: ",section));
 			document.add(new Chunk(tab1));
@@ -289,23 +326,85 @@ public class MakePdf {
 			document.add(new Chunk(tab1));
 			document.add(new Paragraph(rs.getString("bemerkungen"),txt));
 			document.add(Chunk.NEWLINE);
+			document.add(new Chunk(sep));
 			document.add(Chunk.NEWLINE);
+			document.add(Chunk.NEWLINE);
+			if(fehlende_Unterlagen == true){
+				document.add(new Phrase("Folgende Unterlagen fehlen und müssen noch nachgereicht werden:",section));
+				document.add(Chunk.NEWLINE);
+				
+				};
+			if(rs.getString("zugangsvoraussetzung").equals(ART_DER_ZUGANGSVORAUSSETZUNG[Integer.parseInt(ZEUGNIS_FEHLT_INDEX)])){
+				document.add(new Phrase(ZEUGNIS_FEHLT_TEXT,info));
+				document.add(Chunk.NEWLINE);
+				};
+			if(rs.getString("zugangsvoraussetzung").equals(ART_DER_ZUGANGSVORAUSSETZUNG[Integer.parseInt(EMPFEHLUNG_FEHLT_INDEX)])){
+				document.add(new Phrase(EMPFEHLUNG_FEHLT_TEXT,info));
+				document.add(Chunk.NEWLINE);
+				};	
+			if(rs.getString("sorgeberechtigung").equals(ART_DER_SORGEBERECHTIGUNG[Integer.parseInt(SORGERECHTSERKLAERUNG_FEHLT_INDEX)])){
+				document.add(new Phrase(SORGERECHTSERKLAERUNG_FEHLT_TEXT,info));
+				document.add(Chunk.NEWLINE);
+				};
+			if(rs.getString("sorgeberechtigung").equals(ART_DER_SORGEBERECHTIGUNG[Integer.parseInt(NEGATIVATTEST_FEHLT_INDEX)])){
+				document.add(new Phrase(NEGATIVATTEST_FEHLT_TEXT,info));
+				document.add(Chunk.NEWLINE);
+				};	
+			if(rs.getString("sorgeberechtigung").equals(ART_DER_SORGEBERECHTIGUNG[Integer.parseInt(PFLEGSCHAFTSNACHWEIS_FEHLT_INDEX)])){
+				document.add(new Phrase(PFLEGSCHAFTSNACHWEIS_FEHLT_TEXT,info));
+				document.add(Chunk.NEWLINE);
+				};
+			if(rs.getString("sorgeberechtigung").equals(ART_DER_SORGEBERECHTIGUNG[Integer.parseInt(VORMUNDSCHAFTSERKLAERUNG_FEHLT_INDEX)])){
+				document.add(new Phrase(VORMUNDSCHAFTSERKLAERUNG_FEHLT_TEXT,info));
+				document.add(Chunk.NEWLINE);
+				};
+				
+				
+			document.add(Chunk.NEWLINE);
+			document.add(new Phrase("Fotoerlaubnis",section));
+			document.add(Chunk.NEWLINE);
+			document.add(new Phrase(FOTOERLAUBNIS,info));
+			document.add(Chunk.NEWLINE);
+			document.add(new Chunk(tab4));
+			document.add(new Phrase("Zustimmung erteilt:",bestaetigung));
+			document.add(new Chunk(tab5));
+			document.add(new Phrase("ja / nein",bestaetigung));
+			document.add(Chunk.NEWLINE);
+			document.add(Chunk.NEWLINE);
+			document.add(Chunk.NEWLINE);
+			document.add(Chunk.NEWLINE);
+			document.add(new Phrase("Kenntnisnahme des Informationsblattes nach Artikel 13 DS-GVO",section));
+			document.add(Chunk.NEWLINE);
+			document.add(new Phrase(DATENSCHUTZERKLAERUNG,info));
+			document.add(Chunk.NEWLINE);
+			document.add(new Chunk(tab4));
+			document.add(new Phrase("Kenntnis genommen:",bestaetigung));
+			document.add(new Chunk(tab5));
+			document.add(new Phrase("ja / nein",bestaetigung));
+			document.add(Chunk.NEWLINE);
+			document.add(Chunk.NEWLINE);
+			document.add(Chunk.NEWLINE);
+			if(rs.getString("zugangsvoraussetzung").equals(ART_DER_ZUGANGSVORAUSSETZUNG[Integer.parseInt(PROBEUNTERRICHT_INDEX)])){
+				document.add(new Phrase("Teilnahme am Probeunterricht",section));
+				document.add(Chunk.NEWLINE);
+				document.add(new Phrase(PROBEUNTERRICHT_TEXT,info));
+				//document.add(Chunk.NEWLINE);document.add(Chunk.NEWLINE);
+				document.add(new Chunk(tab5));
+				document.add(new Phrase("ja / nein",bestaetigung));
+				document.add(Chunk.NEWLINE);
+				};
 			document.add(Chunk.NEWLINE);
 			document.add(Chunk.NEWLINE);
 			document.add(new Phrase("Neudietendorf, den " + df.format(today),txt));
-			document.add(Chunk.NEWLINE);
-			document.add(Chunk.NEWLINE);
-			document.add(Chunk.NEWLINE);
-			document.add(Chunk.NEWLINE);
-			document.add(Chunk.NEWLINE);
-			document.add(Chunk.NEWLINE);
 			document.add(new Chunk(tab3));
-			document.add(new Phrase("(Unterschrift der Eltern)",txt));
-			// step 5
+			document.add(Chunk.NEWLINE);
+			document.add(new Chunk(tab4));
+			document.add(new Phrase("(Unterschrift der Eltern)",info));
 			document.close();
-		} catch (DocumentException de) {
 		} catch (FileNotFoundException fnf) {
 		} catch (SQLException se) {
+		} catch (DocumentException de) {
+			
 		}
 
 	}
@@ -394,10 +493,11 @@ public void createAnmeldungSA_probe(String ausklasse, String inklasse,String fil
 	if (con != null) {
 	}
 	try {
-		Statement listeSA = DBConnection.con.createStatement();
-		String fuerListeSA = "Select * FROM schuelerdaten WHERE ausklasse = '"
-				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND zugangsvoraussetzung = 'Probeunterricht' AND term = '"+Main.configData.AKTUELLER_TERM+"' ORDER BY kname; ";
-		ResultSet rs = listeSA.executeQuery(fuerListeSA);
+		System.out.println("probeliste wurde gerufen"+Main.configData.ART_DER_ZUGANGSVORAUSSETZUNG[5]);
+		Statement listeSA_probe = DBConnection.con.createStatement();
+		String fuerListeSA_probe = "SELECT * FROM schuelerdaten WHERE ausklasse = '"
+				+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND zugangsvoraussetzung = '"+Main.configData.ART_DER_ZUGANGSVORAUSSETZUNG[5]+"' AND term = '"+Main.configData.AKTUELLER_TERM+"' ORDER BY kname; ";
+		ResultSet rs = listeSA_probe.executeQuery(fuerListeSA_probe);
 	
 		Document document = new Document(PageSize.A4.rotate());
 		document.setMargins(36, 36, 36, 36);
@@ -409,7 +509,7 @@ public void createAnmeldungSA_probe(String ausklasse, String inklasse,String fil
 		// step 3
 		document.open();
 		
-		document.add(new Paragraph("Anmeldungen zum Probeunterricht \nvon-Bülow-Gymnasium, Schuljahr " + Main.configData.AKTUELLER_TERM ,title));
+		document.add(new Paragraph("Anmeldungen zum Probeunterricht \nvon-Bülow-Gymnasium, Schuljahr " + Main.configData.JAHRGANG ,title));
 		document.add(new Paragraph("Übergang von Klasse "+ausklasse + " in "+inklasse,title));
 		document.add(Chunk.NEWLINE);
 		PdfPTable table = new PdfPTable(new float[]{1,2,2,1,4,2});

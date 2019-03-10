@@ -106,6 +106,8 @@ private static boolean zahl2bool(String x){
 				Main.tag_ersteinschulung.setSelectedItem(rs.getString("tag_ersteinschulung"));
 				Main.monat_ersteinschulung.setSelectedItem(rs.getString("monat_ersteinschulung"));
 				Main.jahr_ersteinschulung.setSelectedItem(rs.getString("jahr_ersteinschulung"));
+				Main.rolle_als_sorgeberechtigter1.setSelectedItem(rs.getString("rolle_als_sorgeberechtigter1"));
+				Main.rolle_als_sorgeberechtigter2.setSelectedItem(rs.getString("rolle_als_sorgeberechtigter2"));
 				Main.mname.setText(rs.getString("mname"));
 				Main.mvorname.setText(rs.getString("mvorname"));
 				Main.mstrasse.setText(rs.getString("mstrasse"));
@@ -152,6 +154,7 @@ private static boolean zahl2bool(String x){
 				Main.lblNewLabel_45.setText(rs.getString("kvorname"));
 				Main.lblNewLabel_46.setText(rs.getString("kname"));
 				Main.lblNewLabel_47.setText(rs.getString("kOT"));
+				Main.anzahl_geschwister.setText(rs.getString("anzahl_geschwister"));
 			}
 			catch(SQLException ex){System.out.println("geht nich: " + ex);}
 			finally

@@ -50,7 +50,7 @@ public class makeXLSX {
 		try {
 			Statement listeSA = DBConnection.con.createStatement();
 			String fuerXSLXListeSA = "Select * FROM schuelerdaten WHERE ausklasse = '"
-					+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND zugangsvoraussetzung = 'Probeunterricht' AND term = '1' ORDER BY kname; ";
+					+ ausklasse + "' AND  inklasse = '"+ inklasse +"' AND zugangsvoraussetzung = 'Probeunterricht' AND term = '3' ORDER BY kname; ";
 			ResultSet rs = listeSA.executeQuery(fuerXSLXListeSA);	
 
     XSSFWorkbook workbook = new XSSFWorkbook();

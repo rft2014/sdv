@@ -89,6 +89,7 @@ public class Main extends JFrame {
 	public static JTextField ostrasse; // 34
 	public static JTextField kstammschule; // 35
 	public static JTextField geschwistername;// 36
+	public static JTextField anzahl_geschwister;//37
 	public static JTextArea bemerkungen; // 0
 	public static JComboBox<String> zugangsvoraussetzung;// 0
 	public static JComboBox<String> sorgeberechtigung;// 0
@@ -99,6 +100,8 @@ public class Main extends JFrame {
 	public static JComboBox<String> tag_ersteinschulung;//5
 	public static JComboBox<String> monat_ersteinschulung;//6
 	public static JComboBox<String> jahr_ersteinschulung;//7
+	public static JComboBox<String> rolle_als_sorgeberechtigter1;
+	public static JComboBox<String> rolle_als_sorgeberechtigter2;
 	public static JRadioButton maennlich;// sex 0
 	public static JRadioButton weiblich;
 	public static JRadioButton geschwister_ja;// geschwister 1
@@ -111,13 +114,13 @@ public class Main extends JFrame {
 	public static JRadioButton oga_nein;
 	public static JRadioButton doppel_ja; // ob doppelanmeldung 5
 	public static JRadioButton doppel_nein;
-	private static final String[] SORGEBERECHTIGUNGEN = { "",
-			"beide zusammenlebend", "beide, getrenntlebend (Nachweis!)",
-			"Mutter allein", "Vater allein",
-			"andere, (Beschreibung in Hinweise!)" };
-	private static final String[] ZUGANGSVORAUSSETZUNGEN = { "",
-			"Notenvoraussetzung", "Empfehlung", "Probeunterricht",
-			"aus anderem Gymnasium", "Gemeinschaftsschule" };
+
+	//TODO Add exeption handling for missing configFile
+	public static ConfigurationData configData = new ConfigurationData();
+	private static final String[] ROLLE_ALS_SORGEBERECHTIGTER1 = Main.configData.ROLLE_ALS_SORGEBERECHTIGTER1;
+	private static final String[] ROLLE_ALS_SORGEBERECHTIGTER2 = Main.configData.ROLLE_ALS_SORGEBERECHTIGTER2;
+	private static final String[] SORGEBERECHTIGUNGEN = Main.configData.ART_DER_SORGEBERECHTIGUNG;
+	private static final String[] ZUGANGSVORAUSSETZUNGEN = Main.configData.ART_DER_ZUGANGSVORAUSSETZUNG;
 	public static final String[] KLASSE = {"", "4", "5", "6", "7", "8", "9",
 			"10", "11", "12" };
 	public static final String[]  VBGKLASSE= {"","5a", "5b", "5c"};
@@ -128,7 +131,7 @@ public class Main extends JFrame {
 		"25", "26", "27","28","29","30","31"};
 	private static final String[] MONAT_ERSTEINSCHULUNG = {"","01", "02","03","04","05","06","07",
 		"08","09","10","11","12"};
-	private static final String[] JAHR_ERSTEINSCHULUNG = {"","2013","2014","2015","2016", "2017", "2018", "2019","2020"};
+	private static final String[] JAHR_ERSTEINSCHULUNG = {"","2008","2009","2010","2011","2012","2013","2014","2015","2016", "2017", "2018", "2019","2020"};
 	//static String anzeigeName = "";  // anzeige variable werden auf dem 2. Panel angezeigt
 	//static String anzeigeVorname = "";// um die Uebersichtlichkeit zu verbessern
 	//static String anzeigeOrt = "";
@@ -136,14 +139,11 @@ public class Main extends JFrame {
 	public static JLabel lblNewLabel_46;
 	public static JLabel lblNewLabel_47;
 	
-	//TODO Add exeption handling for missing configFile
-	
-	public static ConfigurationData configData = new ConfigurationData();
 	
 	// Objekte in Arrays für Abfrage per Schleife
-	static JTextField[] persDaten = new JTextField[37];
+	static JTextField[] persDaten = new JTextField[38];
 	@SuppressWarnings("rawtypes")
-	static JComboBox[] divDaten = new JComboBox[9];
+	static JComboBox[] divDaten = new JComboBox[11];
 	static JTextArea[] bemerk = new JTextArea[1];
 	static JRadioButton[] booli = new JRadioButton[12];
 	static ButtonGroup[]  boolgroups = new ButtonGroup[6];//wird zum clearen gebraucht
@@ -453,19 +453,25 @@ public class Main extends JFrame {
 		 */
 		JPanel elternPanel = new JPanel();
 		panel.add(elternPanel, "wrap");
-		elternPanel.setBorder(new TitledBorder(null, "Angaben zu den Eltern",
+		elternPanel.setBorder(new TitledBorder(null, "Angaben zu den Sorgeberechtigten",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		elternPanel.setLayout(new MigLayout());
 
 		JPanel mutterPanel = new JPanel();
 		elternPanel.add(mutterPanel);
-		mutterPanel.setBorder(new TitledBorder(null, "Mutter",
+		mutterPanel.setBorder(new TitledBorder(null, "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		mutterPanel.setLayout(new MigLayout());
 		// ////////////////////////////////////////////
+		JLabel lblNewLabel_13a = new JLabel("Rolle des Sorgeberechtigten");
+		mutterPanel.add(lblNewLabel_13a);
+		rolle_als_sorgeberechtigter1 = new JComboBox<String>(ROLLE_ALS_SORGEBERECHTIGTER1);
+		mutterPanel.add(rolle_als_sorgeberechtigter1, "wrap");
+		rolle_als_sorgeberechtigter1.setName("rolle_als_sorgeberechtigter1");
+		divDaten[9] = rolle_als_sorgeberechtigter1;
+		
 		JLabel lblNewLabel_12 = new JLabel("Name");
 		mutterPanel.add(lblNewLabel_12);
-
 		mname = new JTextField();
 		mutterPanel.add(mname, "wrap");
 		mname.setColumns(20);
@@ -542,10 +548,18 @@ public class Main extends JFrame {
 
 		JPanel vaterPanel = new JPanel();
 		elternPanel.add(vaterPanel);
-		vaterPanel.setBorder(new TitledBorder(null, "Vater",
+		vaterPanel.setBorder(new TitledBorder(null, "",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		vaterPanel.setLayout(new MigLayout());
 		// ////////////////////////////////////////////
+		
+		JLabel lblNewLabel_13b = new JLabel("Rolle des Sorgeberechtigten");
+		vaterPanel.add(lblNewLabel_13b);
+		rolle_als_sorgeberechtigter2 = new JComboBox<String>(ROLLE_ALS_SORGEBERECHTIGTER2);
+		vaterPanel.add(rolle_als_sorgeberechtigter2, "wrap");
+		rolle_als_sorgeberechtigter2.setName("rolle_als_sorgeberechtigter2");
+		divDaten[10] = rolle_als_sorgeberechtigter2;
+		
 		JLabel lblNewLabel_20 = new JLabel("Name");
 		vaterPanel.add(lblNewLabel_20);
 
@@ -714,7 +728,9 @@ public class Main extends JFrame {
 		panelb.add(zugangsvoraussetzung, "wrap");
 		zugangsvoraussetzung.setName("zugangsvoraussetzung");
 		divDaten[0] = zugangsvoraussetzung;
-
+		
+		
+		
 		// ////////////////////////////////////////////////////
 		JLabel lblNewLabel_36 = new JLabel("Sorgeberechtigt");
 		panelb.add(lblNewLabel_36);
@@ -724,6 +740,15 @@ public class Main extends JFrame {
 		sorgeberechtigung.setName("sorgeberechtigung");
 		divDaten[1] = sorgeberechtigung;
 		// ////////////////////////////////////////////////////
+		
+		JLabel lblNewLabel_37a = new JLabel("Anzahl der Geschwister");
+		panelb.add(lblNewLabel_37a);
+		anzahl_geschwister = new JTextField();
+		anzahl_geschwister.setToolTipText("");
+		anzahl_geschwister.setColumns(3);
+		anzahl_geschwister.setName("anzahl_geschwister");
+		persDaten[37] = anzahl_geschwister;
+		panelb.add(anzahl_geschwister, "wrap");
 
 		JLabel lblNewLabel_37 = new JLabel("Geschwister am vBG, ggf. Namen");
 		panelb.add(lblNewLabel_37);
@@ -924,7 +949,7 @@ public class Main extends JFrame {
 	 * Leert nach dem Speichern der Eingaben die Eingabefelder der Gui
 	 */
 	public static void clearGui(){
-		for (int i = 0;i<37;i++){
+		for (int i = 0;i<38;i++){
 			persDaten[i].setText("");
 		}
 		for (int i = 0;i<6;i++){
@@ -933,6 +958,8 @@ public class Main extends JFrame {
 		
 		for (int i = 0;i<9;i++){
 			divDaten[i].setSelectedItem("");
+			divDaten[9].setSelectedItem("Mutter");
+			divDaten[10].setSelectedItem("Vater");
 		}
 		
 		bemerk[0].setText("");
@@ -940,6 +967,10 @@ public class Main extends JFrame {
 		lblNewLabel_45.setText("");
 		lblNewLabel_46.setText("");
 		lblNewLabel_47.setText("");
+		
+		tag_ersteinschulung.setSelectedItem(Main.configData.TAG_ERSTEINSCHULUNG);
+		monat_ersteinschulung.setSelectedItem(Main.configData.MONAT_ERSTEINSCHULUNG);
+		jahr_ersteinschulung.setSelectedItem(Main.configData.JAHR_ERSTEINSCHULUNG);
 	}
 	public void closeApp() {
 	     int ende = JOptionPane.showConfirmDialog(this, "Soll das Programm wirklich beendet werden?", "Beenden", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);

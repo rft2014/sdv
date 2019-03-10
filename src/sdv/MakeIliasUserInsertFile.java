@@ -121,10 +121,10 @@ public class MakeIliasUserInsertFile extends JFrame{
 	private String makeLoginName(String vorname, String nachname,
 			Integer anzahlDurchlauf) {
 		String vn = vorname.replace(" ","");
-		vn = vorname.replace("ä","ae");
-		vn = vorname.replace("ö","oe");
-		vn = vorname.replace("ü","ue");
-		vn = vorname.replace("ß","ss");
+		vn = vn.replace("ä","ae");
+		vn = vn.replace("ö","oe");
+		vn = vn.replace("ü","ue");
+		vn = vn.replace("ß","ss");
 		String login = "";
 		Integer i = anzahlDurchlauf;
 		login = vn + "_" + nachname.substring(0, i);
