@@ -78,7 +78,7 @@ public class MakeExportFile extends JFrame{
 		}
 		try {
 			Statement DatenFuerExport = DBConnection.con.createStatement();
-			String fuerExport = "SELECT * FROM schuelerdaten WHERE term = '1' ";
+			String fuerExport = "SELECT * FROM schuelerdaten WHERE term = '"+Main.configData.AKTUELLER_TERM+"' ";
 			rs = DatenFuerExport.executeQuery(fuerExport);
 			//rs.first();
 

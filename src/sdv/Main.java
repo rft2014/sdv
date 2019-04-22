@@ -117,6 +117,7 @@ public class Main extends JFrame {
 
 	//TODO Add exeption handling for missing configFile
 	public static ConfigurationData configData = new ConfigurationData();
+	//private static final String AKTUELLER_TERM = Main.configD
 	private static final String[] ROLLE_ALS_SORGEBERECHTIGTER1 = Main.configData.ROLLE_ALS_SORGEBERECHTIGTER1;
 	private static final String[] ROLLE_ALS_SORGEBERECHTIGTER2 = Main.configData.ROLLE_ALS_SORGEBERECHTIGTER2;
 	private static final String[] SORGEBERECHTIGUNGEN = Main.configData.ART_DER_SORGEBERECHTIGUNG;
