@@ -96,8 +96,8 @@ public class MakeIliasUserInsertFile extends JFrame{
 	    
 		}
 	});
-	
 	/*
+	
 	JButton btnNewButton_1 = new JButton("Serienbrief erstellen");
 	contentPane.add(btnNewButton_1, "cell 1 9");
 	btnNewButton_1.addActionListener(new ActionListener() {
@@ -178,7 +178,7 @@ public class MakeIliasUserInsertFile extends JFrame{
 		}
 		try {
 			Statement DatenFuerIliasAnmeldung = DBConnection.con.createStatement();
-			String fuerIlias = "SELECT * FROM schuelerdaten WHERE term = '1' AND (klasse ='5a' OR klasse ='5b' OR klasse='5c')";
+			String fuerIlias = "SELECT * FROM schuelerdaten WHERE term = '"+Main.configData.AKTUELLER_TERM+"' AND (klasse ='5a' OR klasse ='5b' OR klasse='5c')ORDER BY klasse, kname";
 			rs = DatenFuerIliasAnmeldung.executeQuery(fuerIlias);
 
 		} catch (SQLException se) {
@@ -229,17 +229,17 @@ public class MakeIliasUserInsertFile extends JFrame{
 		    if (rs.getString("klasse").equals("5a"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_2\" Type=\"Local\">");
-		    	bw.write("il_crs_member_25380");
+		    	bw.write("il_crs_member_28609");
 		    }
 		    if (rs.getString("klasse").equals("5b"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_3\" Type=\"Local\">");
-		    	bw.write("il_crs_member_25382");
+		    	bw.write("il_crs_member_28605");
 		    }
 		    if (rs.getString("klasse").equals("5c"))
 		    {
 		    	bw.write("<Role Action=\"Assign\" Id=\"_4\" Type=\"Local\">");
-		    	bw.write("il_crs_member_25384");
+		    	bw.write("il_crs_member_28607");
 		    }
 		    
 		    bw.write("</Role>");
